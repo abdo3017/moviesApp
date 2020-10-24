@@ -18,7 +18,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 class SplashFragment : BaseFragment(
     R.layout.fragment_splash,
     ToolbarType.NONE,
-    true
+    false
 ) {
     lateinit var binding: FragmentSplashBinding
     private val movieNowPlayingViewModel: MovieNowPlayingViewModel by viewModels()
