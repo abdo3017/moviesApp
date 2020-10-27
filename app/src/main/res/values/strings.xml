@@ -14,4 +14,11 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="back">back</string>
+    <string name="home">home</string>
+    <string name="search">search</string>
+    <string name="fav">favourite</string>
+    <string name="searchIcon">searchIcon</string>
+    <string name="recommendedVideos">Recommended videos</string>
+
+
 </resources>

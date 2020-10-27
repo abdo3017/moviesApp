@@ -1,7 +1,7 @@
 package com.app.movie.di
 
-import com.app.movie.datasource.network.ApiService
-import com.app.movie.datasource.network.mappers.NetworkMapper
+import com.app.movie.datasource.network.MovieService
+import com.app.movie.datasource.network.mappers.MovieNowPlayingNetworkMapper
 import com.app.movie.datasource.network.models.MovieNowPlayingNetworkEntity
 import com.app.movie.domain.models.MovieNowPlaying
 import com.app.movie.utils.Constants
@@ -46,15 +46,15 @@ object NetworkModule  {
 
     @Singleton
     @Provides
-    fun provideNetworkMapper(): Mapper<MovieNowPlayingNetworkEntity, MovieNowPlaying> {
-        return NetworkMapper()
+    fun provideMovieNowPlayingNetworkMapper(): Mapper<MovieNowPlayingNetworkEntity, MovieNowPlaying> {
+        return MovieNowPlayingNetworkMapper()
     }
 
     @Singleton
     @Provides
-    fun provideApiService(retrofit: Retrofit): ApiService {
+    fun provideMovieService(retrofit: Retrofit): MovieService {
         return retrofit
-            .create(ApiService::class.java)
+            .create(MovieService::class.java)
     }
 
     @Singleton

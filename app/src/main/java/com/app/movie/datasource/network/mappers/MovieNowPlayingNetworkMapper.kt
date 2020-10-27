@@ -5,7 +5,7 @@ import com.app.movie.domain.models.MovieNowPlaying
 import com.app.movie.utils.Mapper
 import javax.inject.Inject
 
-class NetworkMapper
+class MovieNowPlayingNetworkMapper
 @Inject
 constructor() : Mapper<MovieNowPlayingNetworkEntity, MovieNowPlaying> {
     override fun mapFromEntity(entity: MovieNowPlayingNetworkEntity): MovieNowPlaying {

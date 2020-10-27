@@ -5,9 +5,9 @@ import com.app.movie.domain.models.MovieNowPlaying
 import com.app.movie.utils.Mapper
 import javax.inject.Inject
 
-class CacheMapper
+class MovieNowPlayingCacheMapper
 @Inject
-constructor(): Mapper<MovieNowPlayingCacheEntity, MovieNowPlaying> {
+constructor() : Mapper<MovieNowPlayingCacheEntity, MovieNowPlaying> {
     override fun mapFromEntity(entity: MovieNowPlayingCacheEntity): MovieNowPlaying {
 
         return MovieNowPlaying(

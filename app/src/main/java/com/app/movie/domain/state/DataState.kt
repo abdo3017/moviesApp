@@ -1,4 +1,4 @@
-package com.example.movieapp.domain.state
+package com.app.movie.domain.state
 
 
 /**

@@ -1,12 +1,9 @@
 package com.app.movie.datasource.network.models
 
-import androidx.room.TypeConverters
-import com.app.movie.utils.ModuleConverter
 import com.google.gson.annotations.SerializedName
 
 data class MovieNowPlayingNetworkEntity(
 
-    @TypeConverters(ModuleConverter::class)
 	@field:SerializedName("dates")
 	val dates: MovieNowPlayingDates? = null,
 
@@ -16,7 +13,6 @@ data class MovieNowPlayingNetworkEntity(
 	@field:SerializedName("total_pages")
 	val totalPages: Int? = null,
 
-    @TypeConverters(ModuleConverter::class)
 	@field:SerializedName("results")
 	val results: List<MovieNowPlayingResultsItem?>? = null,
 

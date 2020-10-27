@@ -4,9 +4,9 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.app.movie.utils.ModuleConverter
 import com.app.movie.datasource.network.models.MovieNowPlayingDates
 import com.app.movie.datasource.network.models.MovieNowPlayingResultsItem
+import com.app.movie.utils.ModuleConverter
 
 @Entity(tableName = "MovieNowPlayingCacheEntity")
 data class MovieNowPlayingCacheEntity(
@@ -31,25 +31,5 @@ data class MovieNowPlayingCacheEntity(
 
 )
 
-data class MovieNowPlayingDates(
-	val maximum: String? = null,
-	val minimum: String? = null
-)
 
-data class MovieNowPlayingResultsItem(
-	val overview: String? = null,
-	val originalLanguage: String? = null,
-	val originalTitle: String? = null,
-	val video: Boolean? = null,
-	val title: String? = null,
-	val genreIds: List<Int?>? = null,
-	val posterPath: String? = null,
-	val backdropPath: String? = null,
-	val releaseDate: String? = null,
-	val popularity: Double? = null,
-	val voteAverage: Double? = null,
-	val id: Int? = null,
-	val adult: Boolean? = null,
-	val voteCount: Int? = null
-)
 

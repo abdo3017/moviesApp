@@ -2,12 +2,13 @@ package com.app.movie.di
 
 import android.content.Context
 import androidx.room.Room
-import com.app.movie.datasource.cache.mappers.CacheMapper
-import com.app.movie.domain.models.MovieNowPlaying
-import com.app.movie.utils.Mapper
 import com.app.movie.datasource.cache.database.AppDataBase
-import com.app.movie.datasource.cache.database.dao.MovieNowPlayingDao
+import com.app.movie.datasource.cache.database.dao.MovieDao
+import com.app.movie.datasource.cache.mappers.MovieNowPlayingCacheMapper
 import com.app.movie.datasource.cache.models.MovieNowPlayingCacheEntity
+import com.app.movie.domain.models.MovieNowPlaying
+import com.app.movie.utils.Constants
+import com.app.movie.utils.Mapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,9 +23,10 @@ object CacheModule {
 
     @Singleton
     @Provides
-    fun provideCacheMapper(): Mapper<MovieNowPlayingCacheEntity, MovieNowPlaying> {
-        return CacheMapper()
+    fun provideMovieNowPlayingCacheMapper(): Mapper<MovieNowPlayingCacheEntity, MovieNowPlaying> {
+        return MovieNowPlayingCacheMapper()
     }
+
     @Singleton
     @Provides
     fun provideAppDb(@ApplicationContext context: Context): AppDataBase {
@@ -32,14 +34,16 @@ object CacheModule {
             .databaseBuilder(
                 context,
                 AppDataBase::class.java,
-                AppDataBase.DATABASE_NAME)
+                Constants.DATABASE_NAME
+            )
             .fallbackToDestructiveMigration()
             .build()
     }
+
     @Singleton
     @Provides
-    fun provideMovieNowPlayingDao(appDataBase: AppDataBase): MovieNowPlayingDao {
-        return appDataBase.movieNowPlayingDao()
+    fun provideMovieDao(appDataBase: AppDataBase): MovieDao {
+        return appDataBase.movieDao()
     }
 
 }
