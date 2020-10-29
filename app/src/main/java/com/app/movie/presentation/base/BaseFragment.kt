@@ -39,12 +39,17 @@ abstract class BaseFragment<T : ViewDataBinding, V> : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
-        viewDataBinding.setVariable(bindingVariable, getViewModel())
+        sitViewDataBindingVariable(bindingVariableId, bindingVariableValue)
         viewDataBinding.lifecycleOwner = this
         viewDataBinding.executePendingBindings()
     }
 
-    abstract val bindingVariable: Int
+    abstract val bindingVariableId: Int
+    abstract val bindingVariableValue: Any
+
+    fun sitViewDataBindingVariable(bindingVariableId: Int, bindingVariableValue: Any) {
+        viewDataBinding.setVariable(bindingVariableId, bindingVariableValue)
+    }
 
     fun getViewDataBinding(): T {
         return viewDataBinding

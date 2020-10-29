@@ -31,8 +31,10 @@ class HomeFragment :
 
     override val layoutId: Int
         get() = R.layout.home_fragment
-    override val bindingVariable: Int
+    override val bindingVariableId: Int
         get() = BR.homeViewModel
+    override val bindingVariableValue: Any
+        get() = getViewModel()
 
 
 }
