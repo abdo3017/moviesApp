@@ -3,12 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.app.movie.presentation.viewmodels.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.app.movie.presentation.ui.homepage.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/home_fragment" />
 
 </navigation>

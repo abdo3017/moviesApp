@@ -7,10 +7,6 @@
         android:title="@string/home" />
 
     <item
-        android:id="@+id/placeHolder"
-        android:title="" />
-
-    <item
         android:id="@+id/actionMyLessons"
         android:icon="@drawable/nav_fav"
         android:title="@string/fav" />

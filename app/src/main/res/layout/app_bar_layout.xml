@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/toolbar"
+    android:background="@drawable/bottom_sheet_round_style"
     android:layout_width="match_parent"
     android:layout_height="@dimen/_50sdp"
-    android:background="@color/colorPrimary"
+    android:elevation="@dimen/_8sdp"
     app:popupTheme="@style/AppTheme.PopupOverlay"
     app:theme="@style/ThemeOverlay.AppCompat.ActionBar">
 
@@ -44,12 +45,21 @@
             android:ellipsize="end"
             android:fontFamily="@font/muli_medium"
             android:maxLength="20"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorGrey"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/container"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/search"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -19,8 +19,8 @@ interface MovieService {
 
     @GET(Constants.VIDEO)
     fun getMovieVideosAsync(
+        @Path("movie_id") id: Int,
         @Query("api_key") apiKey: String = Constants.API_KEY,
-        @Query("language") language: String = Constants.LANGUAGE,
-        @Path("movie_id") id: Int
+        @Query("language") language: String = Constants.LANGUAGE
     ): Deferred<MovieVideosNetworkEntity>
 }

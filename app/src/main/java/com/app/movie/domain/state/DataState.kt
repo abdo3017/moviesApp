@@ -9,6 +9,6 @@ package com.app.movie.domain.state
 sealed class DataState<out R> {
 
     data class Success<out T>(val data: T) : DataState<T>()
-    data class Error(val exception: Exception) : DataState<Nothing>()
+    data class Error<T>(val exception: Exception) : DataState<Exception>()
     object Loading : DataState<Nothing>()
 }

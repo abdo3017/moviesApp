@@ -7,8 +7,6 @@ import com.app.movie.datasource.network.MovieServiceImpl
 import com.app.movie.datasource.network.mappers.MovieNowPlayingNetworkMapper
 import com.app.movie.datasource.network.mappers.MovieVideosNetworkMapper
 import com.app.movie.datasource.repository.MovieRepository
-import com.app.movie.domain.models.MovieNowPlaying
-import com.app.movie.domain.models.MovieVideos
 import com.app.movie.domain.state.DataState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -26,7 +24,7 @@ constructor(
     private val movieVideosCacheMapper: MovieVideosCacheMapper
 ) : MovieRepository {
 
-    override suspend fun getMoviesNowPlaying(): Flow<DataState<MovieNowPlaying>> = flow {
+    override suspend fun getMoviesNowPlaying(): Flow<DataState<Any>> = flow {
         emit(DataState.Loading)
         delay(1000)
         try {
@@ -43,11 +41,11 @@ constructor(
                 )
             )
         } catch (e: Exception) {
-            emit(DataState.Error(e))
+            emit(DataState.Error<Any>(e))
         }
     }
 
-    override suspend fun getMovieVideos(id: Int): Flow<DataState<MovieVideos>> = flow {
+    override suspend fun getMovieVideos(id: Int): Flow<DataState<Any>> = flow {
         emit(DataState.Loading)
         delay(1000)
         try {
@@ -64,7 +62,7 @@ constructor(
                 )
             )
         } catch (e: Exception) {
-            emit(DataState.Error(e))
+            emit(DataState.Error<Any>(e))
         }
     }
 }

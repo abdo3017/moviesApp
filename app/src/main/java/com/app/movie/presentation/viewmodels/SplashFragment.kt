@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.app.movie.R
 import com.app.movie.databinding.FragmentSplashBinding
 import com.app.movie.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,19 +20,17 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>() {
         return getMRootView()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-    }
-
-    override val layoutId: Int
-        get() = R.layout.fragment_splash
-    override val bindingVariable: Int
-        get() = TODO("Not yet implemented")
-
+    //
     override fun getViewModel(): SplashViewModel {
         TODO("Not yet implemented")
     }
+
+    override val bindingVariableId: Int
+        get() = TODO("Not yet implemented")
+    override val bindingVariableValue: Any
+        get() = TODO("Not yet implemented")
+    override val layoutId: Int
+        get() = TODO("Not yet implemented")
 
 
 }

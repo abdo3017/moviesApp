@@ -27,7 +27,7 @@ constructor(
     fun getMoviesNowPlaying(){
         viewModelScope.launch{
             repository.getMoviesNowPlaying().onEach {
-                _dataState.value=it
+                _dataState.value = it as DataState<MovieNowPlaying>
             }.launchIn(viewModelScope)
         }
     }

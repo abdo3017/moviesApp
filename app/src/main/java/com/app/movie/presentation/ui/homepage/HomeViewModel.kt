@@ -31,7 +31,7 @@ constructor(
     fun getMoviesNowPlaying() {
         viewModelScope.launch {
             repository.getMoviesNowPlaying().onEach {
-                _dataStateMovieNowPlaying.value = it
+                _dataStateMovieNowPlaying.value = it as DataState<MovieNowPlaying>
             }.launchIn(viewModelScope)
         }
     }
@@ -39,7 +39,7 @@ constructor(
     fun getMovieVideos(id: Int) {
         viewModelScope.launch {
             repository.getMovieVideos(id).onEach {
-                _dataStateMovieVideos.value = it
+                _dataStateMovieVideos.value = it as DataState<MovieVideos>
             }.launchIn(viewModelScope)
         }
     }

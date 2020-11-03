@@ -11,6 +11,7 @@ object Constants {
     const val API_KEY = "0b05f42616ee89883ecf6adb6af55ae0"
     const val NOW_PLAYING = BASE_URL + "movie/now_playing"
     const val VIDEO = BASE_URL + "movie/{movie_id}/videos"
+    const val YOUTUBE_VIDEO_THUMBNAIL = "https://img.youtube.com/vi/"
 
     const val YOUTUBE_WEB_LINK = "http://www.youtube.com/watch?v="
     const val YOUTUBE_APP_LINK = "vnd.youtube:"
