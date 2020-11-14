@@ -24,6 +24,7 @@
             android:background="@drawable/up_round_style"
             android:elevation="@dimen/_20sdp"
             app:elevation="@dimen/_8sdp"
+            android:backgroundTint="@color/transparent"
             app:itemIconTint="@drawable/tab_color"
             app:itemTextColor="@drawable/tab_color"
             app:labelVisibilityMode="labeled"

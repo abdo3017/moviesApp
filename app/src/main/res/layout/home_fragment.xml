@@ -89,9 +89,10 @@
         </com.google.android.material.card.MaterialCardView>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/content"
+            android:id="@+id/content2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
 
             <View
                 android:id="@+id/line1"
@@ -112,11 +113,63 @@
                 android:layout_marginTop="@dimen/dimen16dp"
                 android:text="top rated TV ٍSeries"
                 android:textAppearance="?attr/textAppearanceHeadline6"
-                android:textColor="@color/unselectedTex"
+                android:textColor="@color/black"
                 app:layout_constraintBottom_toTopOf="@id/rvTVSeriesTopRated"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/line1"
                 app:layout_constraintTop_toTopOf="parent" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvTVSeriesTopRated"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:padding="@dimen/dimen8dp"
+                android:visibility="@{!isLoadingTV ? View.VISIBLE : View.GONE}"
+                app:layoutManager="LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title_hor"
+                tools:listitem="@layout/list_item_hor" />
+
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/loadingTVLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:orientation="vertical"
+                android:visibility="@{isLoadingTV ? View.VISIBLE : View.GONE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title_hor"
+                app:shimmer_repeat_mode="restart"
+                app:shimmer_shape="radial">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <include layout="@layout/list_item_hor_loading" />
+
+                    <include layout="@layout/list_item_hor_loading" />
+
+                    <include layout="@layout/list_item_hor_loading" />
+
+
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
 
             <View
@@ -136,53 +189,42 @@
                 android:layout_width="@dimen/match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_6sdp"
+                android:layout_marginTop="@dimen/_4sdp"
                 android:text="top movies"
                 android:textAppearance="?attr/textAppearanceHeadline6"
-                android:textColor="@color/unselectedTex"
-                app:layout_constraintBottom_toTopOf="@id/rvMoviesPlayingNow"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/line2"
-                app:layout_constraintTop_toBottomOf="@id/rvTVSeriesTopRated" />
+                app:layout_constraintTop_toTopOf="@+id/content" />
 
-
-            <com.facebook.shimmer.ShimmerFrameLayout
-                android:id="@+id/loadingTVLayout"
-                android:layout_width="0dp"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMoviesPlayingNow"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginTop="@dimen/_8sdp"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toTopOf="@id/line2"
+                android:padding="@dimen/dimen8dp"
+                android:visibility="@{!isLoadingMovie ? View.VISIBLE : View.GONE}"
+                app:layoutManager="LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/title_hor">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <include layout="@layout/list_item_hor_loading" />
-
-                    <include layout="@layout/list_item_hor_loading" />
-
-
-                </LinearLayout>
-
-            </com.facebook.shimmer.ShimmerFrameLayout>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/title_ver"
+                tools:listitem="@layout/list_item_ver" />
 
             <com.facebook.shimmer.ShimmerFrameLayout
                 android:id="@+id/loadingMovieLayout"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginTop="@dimen/_8sdp"
                 android:orientation="vertical"
+                android:visibility="@{isLoadingMovie ? View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/title_ver"
-                app:shimmer_repeat_mode="restart"
 
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/title_ver"
+                app:shimmer_repeat_mode="restart"
                 app:shimmer_shape="radial">
 
                 <LinearLayout
@@ -194,41 +236,12 @@
 
                     <include layout="@layout/list_item_ver_loading" />
 
+                    <include layout="@layout/list_item_ver_loading" />
 
                 </LinearLayout>
-
             </com.facebook.shimmer.ShimmerFrameLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvMoviesPlayingNow"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:nestedScrollingEnabled="false"
-                android:orientation="vertical"
-                android:padding="@dimen/dimen8dp"
-                app:layoutManager="LinearLayoutManager"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/title_ver"
-                tools:listitem="@layout/list_item_ver" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvTVSeriesTopRated"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:orientation="horizontal"
-                android:padding="@dimen/dimen8dp"
-                app:layoutManager="LinearLayoutManager"
-                app:layout_constraintBottom_toTopOf="@id/line2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/title_hor"
-                tools:listitem="@layout/list_item_hor" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
 </layout>

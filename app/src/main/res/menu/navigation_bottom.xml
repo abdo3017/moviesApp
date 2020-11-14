@@ -3,11 +3,17 @@
     <item
         android:id="@+id/homePageFragment"
         android:icon="@drawable/nav_home"
-
         android:title="@string/home" />
-
     <item
-        android:id="@+id/actionMyLessons"
+        android:id="@+id/movieFragment"
+        android:icon="@drawable/ic_movie"
+        android:title="@string/movie" />
+    <item
+        android:id="@+id/tvFragment"
+        android:icon="@drawable/ic_tv"
+        android:title="@string/tv" />
+    <item
+        android:id="@+id/favFragment"
         android:icon="@drawable/nav_fav"
         android:title="@string/fav" />
 

@@ -13,6 +13,8 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="movie">movie</string>
+    <string name="tv">TV</string>
     <string name="back">back</string>
     <string name="home">home</string>
     <string name="search">search</string>
