@@ -4,6 +4,7 @@ import androidx.room.TypeConverter
 import com.app.movie.datasource.network.models.MovieNowPlayingDates
 import com.app.movie.datasource.network.models.MovieNowPlayingResultsItem
 import com.app.movie.datasource.network.models.MovieVideosResultsItem
+import com.app.movie.datasource.network.models.TVSeriesTopRatedResult
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -31,6 +32,15 @@ class ModuleConverter {
     @TypeConverter
     fun toListOfMovieVideosResultsItem(value: String): List<MovieVideosResultsItem> =
         toModule(value)!!
+
+    @TypeConverter
+    fun fromListOfTVSeriesTopRatedResultsItem(value: List<TVSeriesTopRatedResult>): String =
+        fromModule(value)!!
+
+    @TypeConverter
+    fun toListOfTVSeriesTopRatedResultsItem(value: String): List<TVSeriesTopRatedResult> =
+        toModule(value)!!
+
 
     private inline fun <reified T> fromModule(obj: T?): String? {
         if (obj == null) {

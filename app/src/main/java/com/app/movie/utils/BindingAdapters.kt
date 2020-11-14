@@ -34,5 +34,21 @@ object BindingAdapters {
         items?.let { (recyclerView.adapter as BaseRecyclerViewAdapter<T>?)?.addItems(it) }
     }
 
+    @JvmStatic
+    @BindingAdapter("load_backdrop")
+    fun loadBackdrop(image: ImageView, url: String?) {
+        if (url != null) {
+            val context = image.context
+            Glide.with(context).load("https://image.tmdb.org/t/p/original/$url").into(image)
+        }
+    }
 
+    @JvmStatic
+    @BindingAdapter("load_poster")
+    fun loadPoster(image: ImageView, url: String?) {
+        if (url != null) {
+            val context = image.context
+            Glide.with(context).load("https://image.tmdb.org/t/p/w200/$url").into(image)
+        }
+    }
 }

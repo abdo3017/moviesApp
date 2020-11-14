@@ -7,12 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.library.baseAdapters.BR
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.app.movie.R
 import com.app.movie.databinding.HomeFragmentBinding
-import com.app.movie.datasource.network.models.MovieVideosResultsItem
+import com.app.movie.datasource.network.models.MovieNowPlayingResultsItem
 import com.app.movie.domain.models.MovieNowPlaying
-import com.app.movie.domain.models.MovieVideos
+import com.app.movie.domain.models.TVSeriesTopRated
 import com.app.movie.domain.state.DataState
 import com.app.movie.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,7 +23,6 @@ class HomeFragment :
     BaseFragment<HomeFragmentBinding, HomeViewModel>() {
 
     private val homeViewModel: HomeViewModel by viewModels()
-    private val moviesTrailersList: MutableList<MovieVideosResultsItem> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,7 +30,7 @@ class HomeFragment :
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
-        getTrailers()
+        getData()
         observeData()
         setViews()
         return getMRootView()
@@ -43,45 +41,55 @@ class HomeFragment :
         return homeViewModel
     }
 
-    private fun getTrailers() {
+    private fun getData() {
         getViewModel().getMoviesNowPlaying()
+        getViewModel().getTVSeriesTopRated()
 
     }
 
     private fun setViews() {
-        getViewDataBinding().recommendedVideosTrailerRv.adapter =
-            MoviesTrailerAdapter(moviesTrailersList)
+        getViewDataBinding().rvMoviesPlayingNow.adapter =
+            MoviePlayingNowAdapter(mutableListOf())
+        getViewDataBinding().rvTVSeriesTopRated.adapter =
+            TVSeriesTopRatedAdapter(mutableListOf())
     }
 
     private fun observeData() {
-        getViewModel().dataStateMovieNowPlaying.observe(viewLifecycleOwner, Observer {
+        getViewModel().dataStateMovieNowPlaying.observe(viewLifecycleOwner, {
             when (it) {
                 is DataState.Success<MovieNowPlaying> -> {
-                    for (i in it.data.results!!) {
-                        Log.d("movie", i!!.id.toString())
-                        getViewModel().getMovieVideos(i.id!!)
-                    }
+                    (getViewDataBinding().rvMoviesPlayingNow.adapter as MoviePlayingNowAdapter).addItems(
+                        items = it.data.results as List<MovieNowPlayingResultsItem>
+                    )
+                    getViewDataBinding().isLoadingMovie = false
+                    getViewDataBinding().loadingMovieLayout.stopShimmer()
+                    getViewDataBinding().loadingMovieLayout.hideShimmer()
+
                 }
                 is DataState.Error<*> -> {
                     Log.d("movie", it.exception.toString())
-
                 }
                 is DataState.Loading -> {
-
+                    getViewDataBinding().isLoadingMovie = true
                 }
             }
         })
-        getViewModel().dataStateMovieVideos.observe(viewLifecycleOwner, Observer {
+        getViewModel().dataStateTVSeriesTopRated.observe(viewLifecycleOwner, {
             when (it) {
-                is DataState.Success<MovieVideos> -> {
-                    Log.d("moviee", it.data.results!![0]!!.key.toString())
-                    moviesTrailersList.add(it.data.results[0]!!)
+                is DataState.Success<TVSeriesTopRated> -> {
+                    (getViewDataBinding().rvTVSeriesTopRated.adapter as TVSeriesTopRatedAdapter).addItems(
+                        items = it.data.results
+                    )
+                    getViewDataBinding().isLoadingTV = false
+                    getViewDataBinding().loadingTVLayout.stopShimmer()
+                    getViewDataBinding().loadingTVLayout.hideShimmer()
                 }
                 is DataState.Error<*> -> {
                     Log.d("moviee", it.exception.toString())
 
                 }
                 is DataState.Loading -> {
+                    getViewDataBinding().isLoadingTV = true
 
                 }
             }

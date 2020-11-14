@@ -4,12 +4,14 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.app.movie.datasource.cache.database.dao.MovieDao
+import com.app.movie.datasource.cache.database.dao.TVSeriesDao
 import com.app.movie.datasource.cache.models.MovieNowPlayingCacheEntity
 import com.app.movie.datasource.cache.models.MovieVideosCacheEntity
+import com.app.movie.datasource.cache.models.TVSeriesTopRatedCacheEntity
 import com.app.movie.utils.ModuleConverter
 
 @Database(
-    entities = [MovieNowPlayingCacheEntity::class, MovieVideosCacheEntity::class],
+    entities = [MovieNowPlayingCacheEntity::class, MovieVideosCacheEntity::class, TVSeriesTopRatedCacheEntity::class],
     version = 1,
     exportSchema = false
 )
@@ -17,4 +19,6 @@ import com.app.movie.utils.ModuleConverter
 abstract class AppDataBase : RoomDatabase() {
 
     abstract fun movieDao(): MovieDao
+    abstract fun TVSeriesDao(): TVSeriesDao
+
 }

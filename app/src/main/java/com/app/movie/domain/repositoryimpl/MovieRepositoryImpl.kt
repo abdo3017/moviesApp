@@ -1,5 +1,6 @@
 package com.app.movie.domain.repositoryimpl
 
+import android.util.Log
 import com.app.movie.datasource.cache.database.dao.MovieDao
 import com.app.movie.datasource.cache.mappers.MovieNowPlayingCacheMapper
 import com.app.movie.datasource.cache.mappers.MovieVideosCacheMapper
@@ -52,8 +53,10 @@ constructor(
             val movieVideosNetworkEntity = movieService.getMovieVideos(id)
             val movieVideos =
                 movieVideosNetworkMapper.mapFromEntity(movieVideosNetworkEntity)
-            movieDao.insertMovieVideos(movieVideosCacheMapper.mapToEntity(movieVideos))
+            val x = movieDao.insertMovieVideos(movieVideosCacheMapper.mapToEntity(movieVideos))
             val movieVideosCacheEntity = movieDao.getMovieVideos()
+            Log.d("movieee", movieVideosCacheEntity.results!![0]!!.key.toString())
+
             emit(
                 DataState.Success(
                     movieVideosCacheMapper.mapFromEntity(

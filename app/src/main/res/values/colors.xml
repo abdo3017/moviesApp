@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <color name="transparentBackground">#66C1C1C1</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="mainBackground">#24292F</color>
     <color name="colorPrimary">#3B58E2</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
@@ -51,6 +53,13 @@
     <color name="colorDarkGray">#707070</color>
     <color name="colorGray">#D9D9D9</color>
     <color name="colorOfWhile">#F6F6F6</color>
-
+    <color name="light_gray">#F5F5F5</color>
+    <color name="yellow1">#F4511E</color>
+    <color name="yellow2">#FB8C00</color>
+    <color name="yellow3">#FFB300</color>
+    <color name="yellow4">#FDD835</color>
+    <color name="yellow5">#C0CA33</color>
+    <color name="yellow6">#FFFF00</color>
+    <color name="lightGray">#B3B3B3</color>
 
 </resources>

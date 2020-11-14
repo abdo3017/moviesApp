@@ -4,9 +4,13 @@ import android.content.Context
 import androidx.room.Room
 import com.app.movie.datasource.cache.database.AppDataBase
 import com.app.movie.datasource.cache.database.dao.MovieDao
+import com.app.movie.datasource.cache.database.dao.TVSeriesDao
 import com.app.movie.datasource.cache.mappers.MovieNowPlayingCacheMapper
+import com.app.movie.datasource.cache.mappers.TVSeriesTopRatedCacheMapper
 import com.app.movie.datasource.cache.models.MovieNowPlayingCacheEntity
+import com.app.movie.datasource.cache.models.TVSeriesTopRatedCacheEntity
 import com.app.movie.domain.models.MovieNowPlaying
+import com.app.movie.domain.models.TVSeriesTopRated
 import com.app.movie.utils.Constants
 import com.app.movie.utils.Mapper
 import dagger.Module
@@ -29,6 +33,12 @@ object CacheModule {
 
     @Singleton
     @Provides
+    fun provideTVSeriesTopRatedCacheMapper(): Mapper<TVSeriesTopRatedCacheEntity, TVSeriesTopRated> {
+        return TVSeriesTopRatedCacheMapper()
+    }
+
+    @Singleton
+    @Provides
     fun provideAppDb(@ApplicationContext context: Context): AppDataBase {
         return Room
             .databaseBuilder(
@@ -46,4 +56,9 @@ object CacheModule {
         return appDataBase.movieDao()
     }
 
+    @Singleton
+    @Provides
+    fun provideTVSeriesTopRated(appDataBase: AppDataBase): TVSeriesDao {
+        return appDataBase.TVSeriesDao()
+    }
 }

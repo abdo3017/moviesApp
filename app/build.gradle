@@ -135,7 +135,8 @@ dependencies {
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
     implementation 'com.yarolegovich:discrete-scrollview:1.5.1'
 
-    implementation 'com.chenlittleping:recyclercoverflow:1.0.6'
+    //Facebook Shimmer Loading
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
 }
 
 kapt {

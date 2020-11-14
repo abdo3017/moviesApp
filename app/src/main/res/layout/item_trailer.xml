@@ -9,7 +9,6 @@
             name="MovieVideoTrailer"
             type="java.lang.String" />
     </data>
-
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="@dimen/_370sdp"
@@ -27,6 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="view Video"
+            android:scaleType="fitXY"
             android:trailerImage="@{MovieVideoTrailer}" />
 
 
