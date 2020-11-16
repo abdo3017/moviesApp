@@ -6,6 +6,7 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.app.movie.presentation.base.BaseRecyclerViewAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 @Suppress("UNCHECKED_CAST")
 object BindingAdapters {
@@ -25,6 +26,7 @@ object BindingAdapters {
     fun setMovieTrailerImage(movieTrailerThumbnail: ImageView, trailerKey: String?) {
         Glide.with(movieTrailerThumbnail.context)
             .load(Constants.YOUTUBE_VIDEO_THUMBNAIL + trailerKey + "/0.jpg")
+            .diskCacheStrategy(DiskCacheStrategy.DATA)
             .into(movieTrailerThumbnail)
     }
 
@@ -39,7 +41,9 @@ object BindingAdapters {
     fun loadBackdrop(image: ImageView, url: String?) {
         if (url != null) {
             val context = image.context
-            Glide.with(context).load("https://image.tmdb.org/t/p/original/$url").into(image)
+            Glide.with(context).load("https://image.tmdb.org/t/p/original/$url")
+                .diskCacheStrategy(DiskCacheStrategy.DATA)
+                .into(image)
         }
     }
 
@@ -48,7 +52,9 @@ object BindingAdapters {
     fun loadPoster(image: ImageView, url: String?) {
         if (url != null) {
             val context = image.context
-            Glide.with(context).load("https://image.tmdb.org/t/p/w200/$url").into(image)
+            Glide.with(context).load("https://image.tmdb.org/t/p/w200/$url")
+                .diskCacheStrategy(DiskCacheStrategy.DATA)
+                .into(image)
         }
     }
 }

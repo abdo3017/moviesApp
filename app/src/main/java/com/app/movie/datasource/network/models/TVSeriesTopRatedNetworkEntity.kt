@@ -2,6 +2,7 @@ package com.app.movie.datasource.network.models
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class TVSeriesTopRatedNetworkEntity(
     @SerializedName("page")
@@ -41,4 +42,4 @@ data class TVSeriesTopRatedResult(
     val voteAverage: Double,
     @SerializedName("vote_count")
     val voteCount: Int
-)
+) : Serializable

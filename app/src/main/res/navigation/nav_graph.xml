@@ -14,6 +14,34 @@
         android:id="@+id/homeFragment"
         android:name="com.app.movie.presentation.ui.homepage.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/home_fragment" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_TVSeriesDetailsFragment"
+            app:destination="@id/TVSeriesDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieDetailsFragment"
+        android:name="com.app.movie.presentation.ui.MovieDetailsFragment"
+        android:label="fragment_movie_details"
+        tools:layout="@layout/fragment_movie_details">
+        <argument
+            android:name="movieDetails"
+            app:argType="com.app.movie.datasource.network.models.MovieNowPlayingResultsItem"
+            app:nullable="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/TVSeriesDetailsFragment"
+        android:name="com.app.movie.presentation.ui.TVSeriesDetailsFragment"
+        android:label="TVSeriesDetailsFragment"
+        tools:layout="@layout/fragment_t_v_series_details">
+        <argument
+            android:name="TVSeriesDetails"
+            app:argType="com.app.movie.datasource.network.models.TVSeriesTopRatedResult"
+            app:nullable="false" />
+    </fragment>
+
 
 </navigation>

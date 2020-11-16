@@ -1,6 +1,7 @@
 package com.app.movie.datasource.network.models
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class MovieNowPlayingNetworkEntity(
 
@@ -18,7 +19,7 @@ data class MovieNowPlayingNetworkEntity(
 
 	@field:SerializedName("total_results")
 	val totalResults: Int? = null
-)
+) : Serializable
 
 data class MovieNowPlayingDates(
 
@@ -27,7 +28,7 @@ data class MovieNowPlayingDates(
 
 	@field:SerializedName("minimum")
 	val minimum: String? = null
-)
+) : Serializable
 
 data class MovieNowPlayingResultsItem(
 
@@ -72,7 +73,7 @@ data class MovieNowPlayingResultsItem(
 
 	@field:SerializedName("vote_count")
 	val voteCount: Int? = null
-)
+) : Serializable
 //
 //import com.squareup.moshi.Json
 //import com.squareup.moshi.JsonClass

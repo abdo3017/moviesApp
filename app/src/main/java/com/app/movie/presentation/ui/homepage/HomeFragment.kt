@@ -5,11 +5,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.library.baseAdapters.BR
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.app.movie.R
-import com.app.movie.databinding.HomeFragmentBinding
+import com.app.movie.databinding.FragmentHomeBinding
 import com.app.movie.datasource.network.models.MovieNowPlayingResultsItem
+import com.app.movie.datasource.network.models.TVSeriesTopRatedResult
 import com.app.movie.domain.models.MovieNowPlaying
 import com.app.movie.domain.models.TVSeriesTopRated
 import com.app.movie.domain.state.DataState
@@ -20,7 +23,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class HomeFragment :
-    BaseFragment<HomeFragmentBinding, HomeViewModel>() {
+    BaseFragment<FragmentHomeBinding, HomeViewModel>(), MoviePlayingNowAdapter.MovieInteraction,
+    TVSeriesTopRatedAdapter.TVSeriesInteraction {
 
     private val homeViewModel: HomeViewModel by viewModels()
 
@@ -49,9 +53,9 @@ class HomeFragment :
 
     private fun setViews() {
         getViewDataBinding().rvMoviesPlayingNow.adapter =
-            MoviePlayingNowAdapter(mutableListOf())
+            MoviePlayingNowAdapter(mutableListOf(), this)
         getViewDataBinding().rvTVSeriesTopRated.adapter =
-            TVSeriesTopRatedAdapter(mutableListOf())
+            TVSeriesTopRatedAdapter(mutableListOf(), this)
     }
 
     private fun observeData() {
@@ -97,11 +101,28 @@ class HomeFragment :
     }
 
     override val layoutId: Int
-        get() = R.layout.home_fragment
+        get() = R.layout.fragment_home
     override val bindingVariableId: Int
         get() = BR.homeViewModel
     override val bindingVariableValue: Any
         get() = getViewModel()
+
+    override fun onMovieItemSelected(item: MovieNowPlayingResultsItem) {
+        findNavController().navigate(
+            HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(
+                item
+            )
+        )
+    }
+
+    override fun onTVSeriesItemSelected(item: TVSeriesTopRatedResult) {
+        Toast.makeText(requireContext(), "trtrtrt", Toast.LENGTH_LONG)
+        findNavController().navigate(
+            HomeFragmentDirections.actionHomeFragmentToTVSeriesDetailsFragment(
+                item
+            )
+        )
+    }
 
 
 }
