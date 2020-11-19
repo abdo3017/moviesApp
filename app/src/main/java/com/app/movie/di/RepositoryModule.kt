@@ -2,14 +2,10 @@ package com.app.movie.di
 
 import com.app.movie.datasource.cache.database.dao.MovieDao
 import com.app.movie.datasource.cache.database.dao.TVSeriesDao
-import com.app.movie.datasource.cache.mappers.MovieNowPlayingCacheMapper
-import com.app.movie.datasource.cache.mappers.MovieVideosCacheMapper
-import com.app.movie.datasource.cache.mappers.TVSeriesTopRatedCacheMapper
+import com.app.movie.datasource.cache.mappers.*
 import com.app.movie.datasource.network.MovieServiceImpl
 import com.app.movie.datasource.network.TVServiceImpl
-import com.app.movie.datasource.network.mappers.MovieNowPlayingNetworkMapper
-import com.app.movie.datasource.network.mappers.MovieVideosNetworkMapper
-import com.app.movie.datasource.network.mappers.TVSeriesTopRatedNetworkMapper
+import com.app.movie.datasource.network.mappers.*
 import com.app.movie.domain.repositoryimpl.MovieRepositoryImpl
 import com.app.movie.domain.repositoryimpl.TVSeriesRepositoryImpl
 import dagger.Module
@@ -29,6 +25,12 @@ object RepositoryModule {
         movieService: MovieServiceImpl,
         movieNowPlayingNetworkMapper: MovieNowPlayingNetworkMapper,
         movieNowPlayingCacheMapper: MovieNowPlayingCacheMapper,
+        movieTopRatedNetworkMapper: MovieTopRatedNetworkMapper,
+        movieTopRatedCacheMapper: MovieTopRatedCacheMapper,
+        movieUpComingNetworkMapper: MovieUpComingNetworkMapper,
+        movieUpComingCacheMapper: MovieUpComingCacheMapper,
+        moviePopularNetworkMapper: MoviePopularNetworkMapper,
+        moviePopularCacheMapper: MoviePopularCacheMapper,
         movieVideosNetworkMapper: MovieVideosNetworkMapper,
         movieVideosCacheMapper: MovieVideosCacheMapper
     ): MovieRepositoryImpl {
@@ -37,6 +39,12 @@ object RepositoryModule {
             movieService,
             movieNowPlayingNetworkMapper,
             movieNowPlayingCacheMapper,
+            movieTopRatedNetworkMapper,
+            movieTopRatedCacheMapper,
+            movieUpComingNetworkMapper,
+            movieUpComingCacheMapper,
+            moviePopularNetworkMapper,
+            moviePopularCacheMapper,
             movieVideosNetworkMapper,
             movieVideosCacheMapper
         )
@@ -48,13 +56,26 @@ object RepositoryModule {
         tvSeriesDao: TVSeriesDao,
         tvService: TVServiceImpl,
         tvSeriesTopRatedNetworkMapper: TVSeriesTopRatedNetworkMapper,
-        tvSeriesTopRatedCacheMapper: TVSeriesTopRatedCacheMapper
+        tvSeriesTopRatedCacheMapper: TVSeriesTopRatedCacheMapper,
+        tvSeriesPopularNetworkMapper: TVSeriesPopularNetworkMapper,
+        tvSeriesPopularCacheMapper: TVSeriesPopularCacheMapper,
+        tvSeriesAiringTodayNetworkMapper: TVSeriesAiringTodayNetworkMapper,
+        tvSeriesAiringTodayCacheMapper: TVSeriesAiringTodayCacheMapper,
+        tvSeriesOnTheAirNetworkMapper: TVSeriesOnTheAirNetworkMapper,
+        tvSeriesOnTheAirCacheMapper: TVSeriesOnTheAirCacheMapper
+
     ): TVSeriesRepositoryImpl {
         return TVSeriesRepositoryImpl(
             tvSeriesDao,
             tvService,
             tvSeriesTopRatedNetworkMapper,
-            tvSeriesTopRatedCacheMapper
+            tvSeriesTopRatedCacheMapper,
+            tvSeriesPopularNetworkMapper,
+            tvSeriesPopularCacheMapper,
+            tvSeriesAiringTodayNetworkMapper,
+            tvSeriesAiringTodayCacheMapper,
+            tvSeriesOnTheAirNetworkMapper,
+            tvSeriesOnTheAirCacheMapper
         )
     }
 

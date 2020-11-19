@@ -12,7 +12,6 @@ data class MovieVideosCacheEntity(
     @PrimaryKey(autoGenerate = false)
     @field:ColumnInfo(name = "id")
     val id: Int? = null,
-
     @TypeConverters(ModuleConverter::class)
     @field:ColumnInfo(name = "results")
     val results: List<MovieVideosResultsItem?>? = null

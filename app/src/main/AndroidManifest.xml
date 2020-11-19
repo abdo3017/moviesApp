@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme1"
         tools:ignore="AllowBackup">
 
-        <activity android:name=".presentation.ui.MainActivity">
+        <activity android:name="com.app.movie.presentation.ui.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

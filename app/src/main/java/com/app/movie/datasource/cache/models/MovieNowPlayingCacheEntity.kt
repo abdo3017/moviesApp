@@ -12,22 +12,22 @@ import com.app.movie.utils.ModuleConverter
 data class MovieNowPlayingCacheEntity(
 
     @TypeConverters(ModuleConverter::class)
-	@field:ColumnInfo(name = "dates")
-	val dates: MovieNowPlayingDates? = null,
+    @field:ColumnInfo(name = "dates")
+    val dates: MovieNowPlayingDates? = null,
 
     @PrimaryKey(autoGenerate = false)
-	@field:ColumnInfo(name ="page")
-	val page: Int? = null,
+    @field:ColumnInfo(name = "page")
+    val page: Int? = null,
 
-    @field:ColumnInfo(name ="total_pages")
-	val totalPages: Int? = null,
+    @field:ColumnInfo(name = "total_pages")
+    val totalPages: Int? = null,
 
     @TypeConverters(ModuleConverter::class)
-	@field:ColumnInfo(name ="results")
-	val results: List<MovieNowPlayingResultsItem?>? = null,
+    @field:ColumnInfo(name = "results")
+    val results: List<MovieNowPlayingResultsItem> = listOf(),
 
-    @field:ColumnInfo(name ="totalResults")
-	val totalResults: Int? = null
+    @field:ColumnInfo(name = "totalResults")
+    val totalResults: Int? = null
 
 )
 

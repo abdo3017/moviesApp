@@ -2,12 +2,9 @@ package com.app.movie.di
 
 import com.app.movie.datasource.network.MovieService
 import com.app.movie.datasource.network.TVService
-import com.app.movie.datasource.network.mappers.MovieNowPlayingNetworkMapper
-import com.app.movie.datasource.network.mappers.TVSeriesTopRatedNetworkMapper
-import com.app.movie.datasource.network.models.MovieNowPlayingNetworkEntity
-import com.app.movie.datasource.network.models.TVSeriesTopRatedNetworkEntity
-import com.app.movie.domain.models.MovieNowPlaying
-import com.app.movie.domain.models.TVSeriesTopRated
+import com.app.movie.datasource.network.mappers.*
+import com.app.movie.datasource.network.models.*
+import com.app.movie.domain.models.*
 import com.app.movie.utils.Constants
 import com.app.movie.utils.Mapper
 import com.google.gson.Gson
@@ -25,7 +22,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(ApplicationComponent::class)
-object NetworkModule  {
+object NetworkModule {
 
     @Singleton
     @Provides
@@ -50,6 +47,30 @@ object NetworkModule  {
 
     @Singleton
     @Provides
+    fun provideMovieVideosNetworkMapper(): Mapper<MovieVideosNetworkEntity, MovieVideos> {
+        return MovieVideosNetworkMapper()
+    }
+
+    @Singleton
+    @Provides
+    fun provideMovieTopRatedNetworkMapper(): Mapper<MovieTopRatedNetworkEntity, MovieTopRated> {
+        return MovieTopRatedNetworkMapper()
+    }
+
+    @Singleton
+    @Provides
+    fun provideMoviePopularNetworkMapper(): Mapper<MoviePopularNetworkEntity, MoviePopular> {
+        return MoviePopularNetworkMapper()
+    }
+
+    @Singleton
+    @Provides
+    fun provideMovieUpComingNetworkMapper(): Mapper<MovieUpComingNetworkEntity, MovieUpComing> {
+        return MovieUpComingNetworkMapper()
+    }
+
+    @Singleton
+    @Provides
     fun provideMovieNowPlayingNetworkMapper(): Mapper<MovieNowPlayingNetworkEntity, MovieNowPlaying> {
         return MovieNowPlayingNetworkMapper()
     }
@@ -58,6 +79,24 @@ object NetworkModule  {
     @Provides
     fun provideTVSeriesTopRatedNetworkMapper(): Mapper<TVSeriesTopRatedNetworkEntity, TVSeriesTopRated> {
         return TVSeriesTopRatedNetworkMapper()
+    }
+
+    @Singleton
+    @Provides
+    fun provideTVSeriesPopularNetworkMapper(): Mapper<TVSeriesPopularNetworkEntity, TVSeriesPopular> {
+        return TVSeriesPopularNetworkMapper()
+    }
+
+    @Singleton
+    @Provides
+    fun provideTVSeriesOnTheAirNetworkMapper(): Mapper<TVSeriesOnTheAirNetworkEntity, TVSeriesOnTheAir> {
+        return TVSeriesOnTheAirNetworkMapper()
+    }
+
+    @Singleton
+    @Provides
+    fun provideTVSeriesAiringTodayNetworkMapper(): Mapper<TVSeriesAiringTodayNetworkEntity, TVSeriesAiringToday> {
+        return TVSeriesAiringTodayNetworkMapper()
     }
 
     @Singleton

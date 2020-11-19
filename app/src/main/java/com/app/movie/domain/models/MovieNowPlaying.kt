@@ -7,6 +7,6 @@ data class MovieNowPlaying(
     val dates: MovieNowPlayingDates? = null,
     val page: Int? = null,
     val totalPages: Int? = null,
-    val results: List<MovieNowPlayingResultsItem?>? = null,
+    val results: List<MovieNowPlayingResultsItem> = listOf(),
     val totalResults: Int? = null
 )

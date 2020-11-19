@@ -5,11 +5,11 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/homeFragment">
 
-    <fragment
+    <!--<fragment
         android:id="@+id/splashFragment"
-        android:name="com.app.movie.presentation.viewmodels.SplashFragment"
+        android:name="com.app.movie.presentation.ui.main.SplashFragment"
         android:label="fragment_splash"
-        tools:layout="@layout/fragment_splash" />
+        tools:layout="@layout/fragment_splash" />-->
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.app.movie.presentation.ui.homepage.HomeFragment"
@@ -21,10 +21,13 @@
         <action
             android:id="@+id/action_homeFragment_to_TVSeriesDetailsFragment"
             app:destination="@id/TVSeriesDetailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_moviesFragment"
+            app:destination="@id/moviesFragment" />
     </fragment>
     <fragment
         android:id="@+id/movieDetailsFragment"
-        android:name="com.app.movie.presentation.ui.MovieDetailsFragment"
+        android:name="com.app.movie.presentation.ui.homepage.MovieDetailsFragment"
         android:label="fragment_movie_details"
         tools:layout="@layout/fragment_movie_details">
         <argument
@@ -34,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/TVSeriesDetailsFragment"
-        android:name="com.app.movie.presentation.ui.TVSeriesDetailsFragment"
+        android:name="com.app.movie.presentation.ui.homepage.TVSeriesDetailsFragment"
         android:label="TVSeriesDetailsFragment"
         tools:layout="@layout/fragment_t_v_series_details">
         <argument
@@ -42,6 +45,11 @@
             app:argType="com.app.movie.datasource.network.models.TVSeriesTopRatedResult"
             app:nullable="false" />
     </fragment>
+    <fragment
+        android:id="@+id/moviesFragment"
+        android:name="com.app.movie.presentation.ui.movies.MoviesFragment"
+        android:label="MoviesFragment"
+        tools:layout="@layout/fragment_movies" />
 
 
 </navigation>

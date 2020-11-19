@@ -1,4 +1,4 @@
-package com.app.movie.presentation.ui
+package com.app.movie.presentation.ui.homepage
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,6 @@ import androidx.databinding.library.baseAdapters.BR
 import com.app.movie.R
 import com.app.movie.databinding.FragmentTVSeriesDetailsBinding
 import com.app.movie.presentation.base.BaseFragment
-import com.app.movie.presentation.ui.homepage.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 

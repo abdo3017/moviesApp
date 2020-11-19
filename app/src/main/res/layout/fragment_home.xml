@@ -191,7 +191,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_6sdp"
                 android:layout_marginTop="@dimen/_4sdp"
-                android:text="top movies"
+                android:text="movies playing now"
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -21,6 +21,12 @@
     <string name="fav">favourite</string>
     <string name="searchIcon">searchIcon</string>
     <string name="recommendedVideos">Recommended videos</string>
+    <string name="playingNow">playing now</string>
+    <string name="topRated">top rated</string>
+    <string name="upComming">up comming</string>
+    <string name="upComing">up coming</string>
+    <string name="popular">popular</string>
+    <string name="background">background</string>
 
 
 </resources>

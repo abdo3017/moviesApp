@@ -1,4 +1,4 @@
-package com.app.movie.presentation.ui
+package com.app.movie.presentation.ui.main
 
 import android.os.Bundle
 import androidx.navigation.Navigation

@@ -1,249 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
         <import type="android.view.View" />
 
         <variable
-            name="isLoadingTV"
-            type="java.lang.Boolean" />
+            name="movie"
+            type="com.app.movie.datasource.network.models.MovieNowPlayingResultsItem" />
 
         <variable
-            name="isLoadingMovie"
-            type="java.lang.Boolean" />
-
-        <variable
-            name="homeViewModel"
-            type="com.app.movie.presentation.ui.homepage.HomeViewModel" />
-
+            name="isDetailsVisible"
+            type="Boolean" />
     </data>
 
-    <LinearLayout
-        android:id="@+id/container"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/containerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/round_rectangle_white_transparent">
+        <!--
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/toolbar_card"
-            style="@style/Widget.Card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/yellow3"
-            app:shapeAppearanceOverlay="@style/Widget.MainToolbar.Corner">
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="32dp"
+                    app:cardCornerRadius="@dimen/corner_radius"
+                    app:layout_constraintBottom_toTopOf="@+id/posterGuideline"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
-                android:id="@+id/toolbar_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                    <ImageView
+                        loadImageUrl="@{movie.posterPath+``}"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="background"
+                        android:scaleType="centerCrop"
+                        tools:srcCompat="@mipmap/hustle" />
 
-                <ImageView
-                    android:id="@+id/back_button"
-                    style="@style/Widget.ImageButton"
+                </androidx.cardview.widget.CardView>
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/posterGuideline"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dimen8dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:padding="@dimen/dimen8dp"
-                    android:rotation="180"
-                    app:srcCompat="@drawable/ic_menu" />
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent="0.6" />
 
-                <com.google.android.material.textview.MaterialTextView
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="32dp"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="@{movie.title}"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardView"
+                    tools:text="TextView" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/round_rectangle_border_gray"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:text="action"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView3"
+                    app:layout_constraintEnd_toStartOf="@+id/textView3"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView3" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/round_rectangle_border_gray"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:text="drama"
+                    app:layout_constraintEnd_toStartOf="@+id/textView4"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toEndOf="@+id/textView2"
+                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/round_rectangle_border_gray"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:text="history"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toEndOf="@+id/textView3"
+                    app:layout_constraintTop_toTopOf="@+id/textView3" />
+
+                <RatingBar
+                    android:id="@+id/ratingBar"
+                    style="@style/Widget.AppCompat.RatingBar.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="@dimen/_4sdp"
-                    android:layout_weight="1"
-                    android:gravity="end|center"
-                    android:text="level"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
+                    android:layout_marginTop="16dp"
+                    android:rating="4"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toEndOf="@+id/textView5"
+                    app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="@dimen/match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/dimen4dp"
-                    android:layout_weight="2"
-                    android:gravity="start|center"
-                    android:text="up"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-                    android:textColor="@color/colorSubText" />
-
-                <ImageView
-                    android:id="@+id/bookmark_button"
-                    style="@style/Widget.ImageButton"
+                <TextView
+                    android:id="@+id/textView5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dimen8dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:padding="@dimen/dimen8dp"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/ic_search" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+                    android:layout_marginEnd="8dp"
+                    android:text="@{movie.voteAverage + `` }"
+                    app:layout_constraintBottom_toBottomOf="@+id/ratingBar"
+                    app:layout_constraintEnd_toStartOf="@+id/ratingBar"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/ratingBar" />
+        -->
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/content2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-            <View
-                android:id="@+id/line1"
-                android:layout_width="@dimen/dimen2dp"
-                android:layout_height="@dimen/match_parent"
-                android:layout_marginStart="@dimen/dimen16dp"
-                android:layout_marginEnd="@dimen/dimen8dp"
-                android:background="@color/yellow1"
-                app:layout_constraintBottom_toBottomOf="@id/title_hor"
-                app:layout_constraintEnd_toStartOf="@id/title_hor"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/title_hor" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/title_hor"
-                android:layout_width="@dimen/match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen16dp"
-                android:text="top rated TV ٍSeries"
-                android:textAppearance="?attr/textAppearanceHeadline6"
-                android:textColor="@color/black"
-                app:layout_constraintBottom_toTopOf="@id/rvTVSeriesTopRated"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/line1"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvTVSeriesTopRated"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:orientation="horizontal"
-                android:padding="@dimen/dimen8dp"
-
-                android:visibility="@{!isLoadingTV ? View.VISIBLE : View.GONE}"
-                app:layoutManager="LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/title_hor"
-                tools:listitem="@layout/list_item_hor" />
-
-
-            <com.facebook.shimmer.ShimmerFrameLayout
-                android:id="@+id/loadingTVLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:orientation="vertical"
-                android:visibility="@{isLoadingTV ? View.VISIBLE : View.GONE}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/title_hor"
-                app:shimmer_repeat_mode="restart"
-                app:shimmer_shape="radial">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <include layout="@layout/list_item_hor_loading" />
-
-                    <include layout="@layout/list_item_hor_loading" />
-
-                    <include layout="@layout/list_item_hor_loading" />
-
-
-                </LinearLayout>
-
-            </com.facebook.shimmer.ShimmerFrameLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-
-            <View
-                android:id="@+id/line2"
-                android:layout_width="@dimen/dimen2dp"
-                android:layout_height="@dimen/match_parent"
-                android:layout_marginStart="@dimen/dimen16dp"
-                android:layout_marginEnd="@dimen/dimen8dp"
-                android:background="@color/yellow1"
-                app:layout_constraintBottom_toBottomOf="@id/title_ver"
-                app:layout_constraintEnd_toStartOf="@id/title_ver"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/title_ver" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/title_ver"
-                android:layout_width="@dimen/match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_6sdp"
-                android:text="top movies"
-                android:textAppearance="?attr/textAppearanceHeadline6"
-                android:textColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/line2"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvMoviesPlayingNow"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:nestedScrollingEnabled="false"
-                android:orientation="vertical"
-                android:padding="@dimen/dimen8dp"
-                android:visibility="@{!isLoadingMovie ? View.VISIBLE : View.GONE}"
-                app:layoutManager="LinearLayoutManager"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/title_ver"
-                tools:listitem="@layout/list_item_ver" />
-
-
-            <com.facebook.shimmer.ShimmerFrameLayout
-                android:id="@+id/loadingMovieLayout"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:orientation="vertical"
-                android:visibility="@{isLoadingMovie ? View.VISIBLE : View.GONE}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/title_ver"
-                app:shimmer_repeat_mode="restart"
-                app:shimmer_shape="radial">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <include layout="@layout/list_item_ver_loading" />
-
-                    <include layout="@layout/list_item_ver_loading" />
-
-                    <include layout="@layout/list_item_ver_loading" />
-
-                    <include layout="@layout/list_item_ver_loading" />
-                </LinearLayout>
-            </com.facebook.shimmer.ShimmerFrameLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </LinearLayout>
 </layout>

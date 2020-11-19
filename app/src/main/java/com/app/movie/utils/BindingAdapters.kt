@@ -5,6 +5,7 @@ import android.widget.RatingBar
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.app.movie.presentation.base.BaseRecyclerViewAdapter
+import com.app.movie.utils.Constants.IMAGE_BASE_URL
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 
@@ -55,6 +56,16 @@ object BindingAdapters {
             Glide.with(context).load("https://image.tmdb.org/t/p/w200/$url")
                 .diskCacheStrategy(DiskCacheStrategy.DATA)
                 .into(image)
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("loadImageUrl")
+    fun loadImage(imageView: ImageView, url: String?) {
+        url?.let {
+            Glide.with(imageView)
+                .load(IMAGE_BASE_URL + url)
+                .into(imageView)
         }
     }
 }

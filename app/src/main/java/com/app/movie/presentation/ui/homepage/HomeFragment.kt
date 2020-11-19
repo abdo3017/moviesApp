@@ -23,7 +23,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class HomeFragment :
-    BaseFragment<FragmentHomeBinding, HomeViewModel>(), MoviePlayingNowAdapter.MovieInteraction,
+    BaseFragment<FragmentHomeBinding, HomeViewModel>(), HomeMoviePlayingNowAdapter.MovieInteraction,
     TVSeriesTopRatedAdapter.TVSeriesInteraction {
 
     private val homeViewModel: HomeViewModel by viewModels()
@@ -53,7 +53,7 @@ class HomeFragment :
 
     private fun setViews() {
         getViewDataBinding().rvMoviesPlayingNow.adapter =
-            MoviePlayingNowAdapter(mutableListOf(), this)
+            HomeMoviePlayingNowAdapter(mutableListOf(), this)
         getViewDataBinding().rvTVSeriesTopRated.adapter =
             TVSeriesTopRatedAdapter(mutableListOf(), this)
     }
@@ -62,8 +62,8 @@ class HomeFragment :
         getViewModel().dataStateMovieNowPlaying.observe(viewLifecycleOwner, {
             when (it) {
                 is DataState.Success<MovieNowPlaying> -> {
-                    (getViewDataBinding().rvMoviesPlayingNow.adapter as MoviePlayingNowAdapter).addItems(
-                        items = it.data.results as List<MovieNowPlayingResultsItem>
+                    (getViewDataBinding().rvMoviesPlayingNow.adapter as HomeMoviePlayingNowAdapter).addItems(
+                        items = it.data.results
                     )
                     getViewDataBinding().isLoadingMovie = false
                     getViewDataBinding().loadingMovieLayout.stopShimmer()

@@ -2,13 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/homePageFragment"
+        android:id="@+id/homeFragment"
         android:icon="@drawable/nav_home"
         android:orderInCategory="1"
         app:showAsAction="always"
         android:title="@string/home" />
     <item
-        android:id="@+id/movieFragment"
+        android:id="@+id/moviesFragment"
         android:icon="@drawable/ic_movie"
         android:orderInCategory="2"
         app:showAsAction="always"

@@ -5,12 +5,9 @@ import androidx.room.Room
 import com.app.movie.datasource.cache.database.AppDataBase
 import com.app.movie.datasource.cache.database.dao.MovieDao
 import com.app.movie.datasource.cache.database.dao.TVSeriesDao
-import com.app.movie.datasource.cache.mappers.MovieNowPlayingCacheMapper
-import com.app.movie.datasource.cache.mappers.TVSeriesTopRatedCacheMapper
-import com.app.movie.datasource.cache.models.MovieNowPlayingCacheEntity
-import com.app.movie.datasource.cache.models.TVSeriesTopRatedCacheEntity
-import com.app.movie.domain.models.MovieNowPlaying
-import com.app.movie.domain.models.TVSeriesTopRated
+import com.app.movie.datasource.cache.mappers.*
+import com.app.movie.datasource.cache.models.*
+import com.app.movie.domain.models.*
 import com.app.movie.utils.Constants
 import com.app.movie.utils.Mapper
 import dagger.Module
@@ -24,6 +21,11 @@ import javax.inject.Singleton
 @Module
 @InstallIn(ApplicationComponent::class)
 object CacheModule {
+    @Singleton
+    @Provides
+    fun provideMovieVideosCacheMapper(): Mapper<MovieVideosCacheEntity, MovieVideos> {
+        return MovieVideosCacheMapper()
+    }
 
     @Singleton
     @Provides
@@ -33,8 +35,44 @@ object CacheModule {
 
     @Singleton
     @Provides
+    fun provideMovieTopRatedCacheMapper(): Mapper<MovieTopRatedCacheEntity, MovieTopRated> {
+        return MovieTopRatedCacheMapper()
+    }
+
+    @Singleton
+    @Provides
+    fun provideMovieUpComingCacheMapper(): Mapper<MovieUpComingCacheEntity, MovieUpComing> {
+        return MovieUpComingCacheMapper()
+    }
+
+    @Singleton
+    @Provides
+    fun provideMoviePopularCacheMapper(): Mapper<MoviePopularCacheEntity, MoviePopular> {
+        return MoviePopularCacheMapper()
+    }
+
+    @Singleton
+    @Provides
     fun provideTVSeriesTopRatedCacheMapper(): Mapper<TVSeriesTopRatedCacheEntity, TVSeriesTopRated> {
         return TVSeriesTopRatedCacheMapper()
+    }
+
+    @Singleton
+    @Provides
+    fun provideTVSeriesPopularCacheMapper(): Mapper<TVSeriesPopularCacheEntity, TVSeriesPopular> {
+        return TVSeriesPopularCacheMapper()
+    }
+
+    @Singleton
+    @Provides
+    fun provideTVSeriesOnTheAirCacheMapper(): Mapper<TVSeriesOnTheAirCacheEntity, TVSeriesOnTheAir> {
+        return TVSeriesOnTheAirCacheMapper()
+    }
+
+    @Singleton
+    @Provides
+    fun provideTVSeriesAiringTodayCacheMapper(): Mapper<TVSeriesAiringTodayCacheEntity, TVSeriesAiringToday> {
+        return TVSeriesAiringTodayCacheMapper()
     }
 
     @Singleton

@@ -7,7 +7,7 @@ import com.app.movie.datasource.network.models.MovieNowPlayingResultsItem
 import com.app.movie.presentation.base.BaseRecyclerViewAdapter
 import com.app.movie.presentation.base.BaseViewHolder
 
-class MoviePlayingNowAdapter(
+class HomeMoviePlayingNowAdapter(
     items: MutableList<MovieNowPlayingResultsItem>,
     private val movieInteraction: MovieInteraction
 ) :

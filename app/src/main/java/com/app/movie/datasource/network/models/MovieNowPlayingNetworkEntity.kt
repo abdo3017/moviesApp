@@ -5,20 +5,20 @@ import java.io.Serializable
 
 data class MovieNowPlayingNetworkEntity(
 
-	@field:SerializedName("dates")
-	val dates: MovieNowPlayingDates? = null,
+    @field:SerializedName("dates")
+    val dates: MovieNowPlayingDates? = null,
 
-	@field:SerializedName("page")
-	val page: Int? = null,
+    @field:SerializedName("page")
+    val page: Int? = null,
 
-	@field:SerializedName("total_pages")
-	val totalPages: Int? = null,
+    @field:SerializedName("total_pages")
+    val totalPages: Int? = null,
 
-	@field:SerializedName("results")
-	val results: List<MovieNowPlayingResultsItem?>? = null,
+    @field:SerializedName("results")
+    val results: List<MovieNowPlayingResultsItem> = listOf(),
 
-	@field:SerializedName("total_results")
-	val totalResults: Int? = null
+    @field:SerializedName("total_results")
+    val totalResults: Int? = null
 ) : Serializable
 
 data class MovieNowPlayingDates(

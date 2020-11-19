@@ -5,13 +5,11 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.app.movie.datasource.cache.database.dao.MovieDao
 import com.app.movie.datasource.cache.database.dao.TVSeriesDao
-import com.app.movie.datasource.cache.models.MovieNowPlayingCacheEntity
-import com.app.movie.datasource.cache.models.MovieVideosCacheEntity
-import com.app.movie.datasource.cache.models.TVSeriesTopRatedCacheEntity
+import com.app.movie.datasource.cache.models.*
 import com.app.movie.utils.ModuleConverter
 
 @Database(
-    entities = [MovieNowPlayingCacheEntity::class, MovieVideosCacheEntity::class, TVSeriesTopRatedCacheEntity::class],
+    entities = [MovieNowPlayingCacheEntity::class, MovieVideosCacheEntity::class, TVSeriesTopRatedCacheEntity::class, MovieTopRatedCacheEntity::class, MovieUpComingCacheEntity::class, MoviePopularCacheEntity::class, TVSeriesAiringTodayCacheEntity::class, TVSeriesOnTheAirCacheEntity::class, TVSeriesPopularCacheEntity::class],
     version = 1,
     exportSchema = false
 )

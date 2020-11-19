@@ -11,7 +11,7 @@
 
         <variable
             name="movieInteraction"
-            type="com.app.movie.presentation.ui.homepage.MoviePlayingNowAdapter.MovieInteraction" />
+            type="com.app.movie.presentation.ui.homepage.HomeMoviePlayingNowAdapter.MovieInteraction" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
