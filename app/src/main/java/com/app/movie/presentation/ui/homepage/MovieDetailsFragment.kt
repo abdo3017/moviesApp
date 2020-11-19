@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.transition.TransitionInflater
 import com.app.movie.BR
 import com.app.movie.R
 import com.app.movie.databinding.FragmentMovieDetailsBinding
@@ -20,6 +21,9 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding, HomeViewM
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
+        sharedElementEnterTransition =
+            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+
         return getMRootView()
     }
 

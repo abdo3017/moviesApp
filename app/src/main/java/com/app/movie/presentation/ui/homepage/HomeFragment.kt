@@ -5,9 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.library.baseAdapters.BR
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.app.movie.R
 import com.app.movie.databinding.FragmentHomeBinding
@@ -18,6 +18,7 @@ import com.app.movie.domain.models.TVSeriesTopRated
 import com.app.movie.domain.state.DataState
 import com.app.movie.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_movie_details.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
@@ -108,19 +109,24 @@ class HomeFragment :
         get() = getViewModel()
 
     override fun onMovieItemSelected(item: MovieNowPlayingResultsItem) {
+        val extras = FragmentNavigatorExtras(
+            imageViewHome to "imageViewHome"
+        )
         findNavController().navigate(
             HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(
                 item
-            )
+            ), extras
         )
     }
 
     override fun onTVSeriesItemSelected(item: TVSeriesTopRatedResult) {
-        Toast.makeText(requireContext(), "trtrtrt", Toast.LENGTH_LONG)
+        val extras = FragmentNavigatorExtras(
+            imageViewHome to "imageViewHome"
+        )
         findNavController().navigate(
             HomeFragmentDirections.actionHomeFragmentToTVSeriesDetailsFragment(
                 item
-            )
+            ), extras
         )
     }
 

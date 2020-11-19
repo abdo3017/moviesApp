@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.library.baseAdapters.BR
+import androidx.transition.TransitionInflater
 import com.app.movie.R
 import com.app.movie.databinding.FragmentTVSeriesDetailsBinding
 import com.app.movie.presentation.base.BaseFragment
@@ -20,7 +21,8 @@ class TVSeriesDetailsFragment : BaseFragment<FragmentTVSeriesDetailsBinding, Hom
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-
+        sharedElementEnterTransition =
+            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
         return getMRootView()
 
     }
