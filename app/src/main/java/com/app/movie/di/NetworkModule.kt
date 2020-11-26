@@ -1,7 +1,7 @@
 package com.app.movie.di
 
-import com.app.movie.datasource.network.MovieService
-import com.app.movie.datasource.network.TVService
+import com.app.movie.datasource.network.api.MovieService
+import com.app.movie.datasource.network.api.TVService
 import com.app.movie.datasource.network.mappers.*
 import com.app.movie.datasource.network.models.*
 import com.app.movie.domain.models.*

@@ -3,8 +3,8 @@ package com.app.movie.di
 import com.app.movie.datasource.cache.database.dao.MovieDao
 import com.app.movie.datasource.cache.database.dao.TVSeriesDao
 import com.app.movie.datasource.cache.mappers.*
-import com.app.movie.datasource.network.MovieServiceImpl
-import com.app.movie.datasource.network.TVServiceImpl
+import com.app.movie.datasource.network.api.MovieServiceImpl
+import com.app.movie.datasource.network.api.TVServiceImpl
 import com.app.movie.datasource.network.mappers.*
 import com.app.movie.domain.repositoryimpl.MovieRepositoryImpl
 import com.app.movie.domain.repositoryimpl.TVSeriesRepositoryImpl

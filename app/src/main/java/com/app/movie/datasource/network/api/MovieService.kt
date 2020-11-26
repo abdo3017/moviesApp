@@ -1,4 +1,4 @@
-package com.app.movie.datasource.network
+package com.app.movie.datasource.network.api
 
 import com.app.movie.datasource.network.models.*
 import com.app.movie.utils.Constants
@@ -13,7 +13,7 @@ interface MovieService {
     fun getMoviesNowPLayingAsync(
         @Query("api_key") apiKey: String = Constants.API_KEY,
         @Query("language") language: String = Constants.LANGUAGE,
-        @Query("page") page: Int = 1
+        @Query("page") page: Int
     ): Deferred<MovieNowPlayingNetworkEntity>
 
     @GET(Constants.TOP_RATED_MOVIE)

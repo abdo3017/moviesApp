@@ -1,4 +1,4 @@
-package com.app.movie.datasource.network
+package com.app.movie.datasource.network.api
 
 import com.app.movie.datasource.network.models.*
 import kotlinx.coroutines.Dispatchers.IO
@@ -11,8 +11,8 @@ constructor(
     private val apiService: MovieService
 ) {
 
-    suspend fun getMoviesNowPLaying(): MovieNowPlayingNetworkEntity = withContext(IO) {
-        apiService.getMoviesNowPLayingAsync().await()
+    suspend fun getMoviesNowPLaying(page: Int): MovieNowPlayingNetworkEntity = withContext(IO) {
+        apiService.getMoviesNowPLayingAsync(page = page).await()
     }
 
     suspend fun getMoviesTopRated(): MovieTopRatedNetworkEntity = withContext(IO) {

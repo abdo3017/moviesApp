@@ -12,8 +12,8 @@ interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMovieNowPlaying(movie: MovieNowPlayingCacheEntity): Long
 
-    @Query("SELECT * FROM MovieNowPlayingCacheEntity")
-    suspend fun getMovieNowPlaying(): MovieNowPlayingCacheEntity
+    @Query("SELECT * FROM MovieNowPlayingCacheEntity WHERE MovieNowPlayingCacheEntity.page Like :page")
+    suspend fun getMovieNowPlaying(page: Int): MovieNowPlayingCacheEntity
 
     @Query("SELECT * FROM MovieTopRatedCacheEntity")
     suspend fun getMovieTopRated(): MovieTopRatedCacheEntity

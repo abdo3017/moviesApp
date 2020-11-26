@@ -80,10 +80,11 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() {
                     Log.d("trtrtr", itemsNowPlaying.value.toString())
                     viewPageAdapter.addFragment(MoviePlayingNowFragment(itemsNowPlaying))
                 }
-                is DataState.Error<*> -> {
-                    Log.d("movie", it.exception.toString())
-                }
                 is DataState.Loading -> {
+                }
+                else -> {
+                    Log.d("moviee", (it as DataState.Error).exception.toString())
+
                 }
             }
         })
@@ -94,10 +95,11 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() {
                     viewPageAdapter.addFragment(MovieTopRatedFragment(itemsTopRated))
 
                 }
-                is DataState.Error<*> -> {
-                    Log.d("movie", it.exception.toString())
-                }
                 is DataState.Loading -> {
+                }
+                else -> {
+                    Log.d("moviee", (it as DataState.Error).exception.toString())
+
                 }
             }
         })
@@ -108,10 +110,11 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() {
                     viewPageAdapter.addFragment(MovieUpComingFragment(itemsUpComing))
 
                 }
-                is DataState.Error<*> -> {
-                    Log.d("movie", it.exception.toString())
-                }
                 is DataState.Loading -> {
+                }
+                else -> {
+                    Log.d("moviee", (it as DataState.Error).exception.toString())
+
                 }
             }
         })
@@ -122,10 +125,11 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() {
                     viewPageAdapter.addFragment(MoviePopularFragment(itemsPopular))
 
                 }
-                is DataState.Error<*> -> {
-                    Log.d("movie", it.exception.toString())
-                }
                 is DataState.Loading -> {
+                }
+                else -> {
+                    Log.d("moviee", (it as DataState.Error).exception.toString())
+
                 }
             }
         })

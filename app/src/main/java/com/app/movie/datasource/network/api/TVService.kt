@@ -1,4 +1,4 @@
-package com.app.movie.datasource.network
+package com.app.movie.datasource.network.api
 
 import com.app.movie.datasource.network.models.TVSeriesAiringTodayNetworkEntity
 import com.app.movie.datasource.network.models.TVSeriesOnTheAirNetworkEntity

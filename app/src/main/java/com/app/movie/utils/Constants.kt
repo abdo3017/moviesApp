@@ -27,4 +27,6 @@ object Constants {
     const val YOUTUBE_WEB_LINK = "http://www.youtube.com/watch?v="
     const val YOUTUBE_APP_LINK = "vnd.youtube:"
 
+    const val GITHUB_STARTING_PAGE_INDEX = 1
+    const val NETWORK_PAGE_SIZE = 10
 }

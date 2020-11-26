@@ -1,14 +1,20 @@
 package com.app.movie.domain.repositoryimpl
 
+import androidx.paging.PagingSource
 import com.app.movie.datasource.cache.database.dao.MovieDao
 import com.app.movie.datasource.cache.mappers.*
 import com.app.movie.datasource.cache.models.*
-import com.app.movie.datasource.network.MovieServiceImpl
+import com.app.movie.datasource.network.api.MovieServiceImpl
 import com.app.movie.datasource.network.mappers.*
+import com.app.movie.datasource.network.models.MovieNowPlayingResultsItem
 import com.app.movie.datasource.repository.MovieRepository
+import com.app.movie.domain.models.MovieNowPlaying
 import com.app.movie.domain.state.DataState
+import com.app.movie.utils.Constants
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import retrofit2.HttpException
+import java.io.IOException
 import javax.inject.Inject
 
 class MovieRepositoryImpl
@@ -28,21 +34,20 @@ constructor(
     private val movieVideosCacheMapper: MovieVideosCacheMapper
 ) : MovieRepository {
 
-    override suspend fun getMoviesNowPlaying(): Flow<DataState<Any>> = flow {
-        emit(DataState.Loading)
+    override suspend fun getMoviesNowPlaying(page: Int): DataState<MovieNowPlaying>? {
         var movieNowPlayingCacheEntity: MovieNowPlayingCacheEntity
+        var result: DataState<MovieNowPlaying>? = null
         kotlin.runCatching {
-            movieNowPlayingCacheEntity = movieDao.getMovieNowPlaying()
-            emit(
-                DataState.Success(
-                    movieNowPlayingCacheMapper.mapFromEntity(
-                        movieNowPlayingCacheEntity
-                    )
+            movieNowPlayingCacheEntity = movieDao.getMovieNowPlaying(page)
+            result = DataState.Success(
+                movieNowPlayingCacheMapper.mapFromEntity(
+                    movieNowPlayingCacheEntity
                 )
             )
+
         }.getOrElse {
             try {
-                val movieNowPlayingNetworkEntity = movieService.getMoviesNowPLaying()
+                val movieNowPlayingNetworkEntity = movieService.getMoviesNowPLaying(page)
                 val movieNowPlaying =
                     movieNowPlayingNetworkMapper.mapFromEntity(movieNowPlayingNetworkEntity)
                 movieDao.insertMovieNowPlaying(
@@ -50,21 +55,26 @@ constructor(
                         movieNowPlaying
                     )
                 )
-                movieNowPlayingCacheEntity = movieDao.getMovieNowPlaying()
-                emit(
-                    DataState.Success(
-                        movieNowPlayingCacheMapper.mapFromEntity(
-                            movieNowPlayingCacheEntity
-                        )
+                movieNowPlayingCacheEntity = movieDao.getMovieNowPlaying(page)
+                result = DataState.Success(
+                    movieNowPlayingCacheMapper.mapFromEntity(
+                        movieNowPlayingCacheEntity
                     )
                 )
-            } catch (e: Exception) {
-                emit(DataState.Error<Any>(e))
+
+            } catch (exception: IOException) {
+                result = DataState.Error(exception) as DataState<MovieNowPlaying>
+            } catch (exception: HttpException) {
+                result = DataState.Error(exception) as DataState<MovieNowPlaying>
             }
-
             //delay(1000)
-
         }
+
+        return result
+    }
+
+    override suspend fun getMoviesNowPlaying(): Flow<DataState<Any>> {
+        TODO("Not yet implemented")
     }
 
     override suspend fun getMoviesTopRated(): Flow<DataState<Any>> = flow {
@@ -94,7 +104,7 @@ constructor(
                     )
                 )
             } catch (e: Exception) {
-                emit(DataState.Error<Any>(e))
+                emit(DataState.Error(e))
             }
         }
         //delay(1000)
@@ -128,7 +138,7 @@ constructor(
                     )
                 )
             } catch (e: Exception) {
-                emit(DataState.Error<Any>(e))
+                emit(DataState.Error(e))
             }
         }
         //delay(1000)
@@ -166,7 +176,7 @@ constructor(
                     )
                 )
             } catch (e: Exception) {
-                emit(DataState.Error<Any>(e))
+                emit(DataState.Error(e))
             }
 
             //delay(1000)
@@ -203,10 +213,28 @@ constructor(
                     )
                 )
             } catch (e: Exception) {
-                emit(DataState.Error<Any>(e))
+                emit(DataState.Error(e))
             }
         }
         //delay(1000)
 
     }
+
+    val moviePlayingNowPagingSource = object : PagingSource<Int, MovieNowPlayingResultsItem>() {
+        override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieNowPlayingResultsItem> {
+            val page = params.key ?: Constants.GITHUB_STARTING_PAGE_INDEX
+            return when (val movieData: DataState<MovieNowPlaying> = getMoviesNowPlaying(page)!!) {
+                is DataState.Success<MovieNowPlaying> -> {
+                    LoadResult.Page(
+                        data = movieData.data.results,
+                        prevKey = if (page == Constants.GITHUB_STARTING_PAGE_INDEX) null else page - 1,
+                        nextKey = if (movieData.data.results.isEmpty()) null else page + 1
+                    )
+                }
+                else -> LoadResult.Error((movieData as DataState.Error).exception)
+            }
+        }
+
+    }
+
 }

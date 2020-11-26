@@ -9,7 +9,7 @@ import com.app.movie.datasource.cache.models.TVSeriesAiringTodayCacheEntity
 import com.app.movie.datasource.cache.models.TVSeriesOnTheAirCacheEntity
 import com.app.movie.datasource.cache.models.TVSeriesPopularCacheEntity
 import com.app.movie.datasource.cache.models.TVSeriesTopRatedCacheEntity
-import com.app.movie.datasource.network.TVServiceImpl
+import com.app.movie.datasource.network.api.TVServiceImpl
 import com.app.movie.datasource.network.mappers.TVSeriesAiringTodayNetworkMapper
 import com.app.movie.datasource.network.mappers.TVSeriesOnTheAirNetworkMapper
 import com.app.movie.datasource.network.mappers.TVSeriesPopularNetworkMapper
@@ -66,7 +66,7 @@ constructor(
                     )
                 )
             } catch (e: Exception) {
-                emit(DataState.Error<Any>(e))
+                emit(DataState.Error(e))
             }
         }
         //delay(1000)
@@ -104,7 +104,7 @@ constructor(
                     )
                 )
             } catch (e: Exception) {
-                emit(DataState.Error<Any>(e))
+                emit(DataState.Error(e))
             }
         }
         //delay(1000)
@@ -142,7 +142,7 @@ constructor(
                     )
                 )
             } catch (e: Exception) {
-                emit(DataState.Error<Any>(e))
+                emit(DataState.Error(e))
             }
         }
         //delay(1000)
@@ -180,7 +180,7 @@ constructor(
                     )
                 )
             } catch (e: Exception) {
-                emit(DataState.Error<Any>(e))
+                emit(DataState.Error(e))
             }
         }
         //delay(1000)
