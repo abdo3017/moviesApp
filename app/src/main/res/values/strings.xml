@@ -27,6 +27,8 @@
     <string name="upComing">up coming</string>
     <string name="popular">popular</string>
     <string name="background">background</string>
+    <string name="on_the_air">on the air</string>
+    <string name="airing_today">airing today</string>
 
 
 </resources>

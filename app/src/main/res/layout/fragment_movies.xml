@@ -7,10 +7,6 @@
         <import type="android.view.View" />
 
         <variable
-            name="movie"
-            type="com.app.movie.datasource.network.models.MovieNowPlayingResultsItem" />
-
-        <variable
             name="isDetailsVisible"
             type="Boolean" />
     </data>

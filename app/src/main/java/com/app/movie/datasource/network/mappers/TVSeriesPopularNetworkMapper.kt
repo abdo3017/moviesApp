@@ -1,7 +1,7 @@
 package com.app.movie.datasource.network.mappers
 
-import com.app.movie.datasource.network.models.TVSeriesPopularNetworkEntity
-import com.app.movie.domain.models.TVSeriesPopular
+import com.app.movie.datasource.network.models.tv.TVSeriesPopularNetworkEntity
+import com.app.movie.domain.models.tv.TVSeriesPopular
 import com.app.movie.utils.Mapper
 import javax.inject.Inject
 

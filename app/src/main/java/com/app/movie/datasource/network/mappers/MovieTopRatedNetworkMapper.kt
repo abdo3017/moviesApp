@@ -1,7 +1,7 @@
 package com.app.movie.datasource.network.mappers
 
-import com.app.movie.datasource.network.models.MovieTopRatedNetworkEntity
-import com.app.movie.domain.models.MovieTopRated
+import com.app.movie.datasource.network.models.movies.MovieTopRatedNetworkEntity
+import com.app.movie.domain.models.movies.MovieTopRated
 import com.app.movie.utils.Mapper
 import javax.inject.Inject
 

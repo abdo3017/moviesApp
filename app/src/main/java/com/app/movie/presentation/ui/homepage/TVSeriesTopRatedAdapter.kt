@@ -3,15 +3,14 @@ package com.app.movie.presentation.ui.homepage
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.app.movie.databinding.ListItemHorBinding
-import com.app.movie.datasource.network.models.TVSeriesTopRatedResult
-import com.app.movie.presentation.base.BaseRecyclerViewAdapter
+import com.app.movie.datasource.network.models.tv.TVSeriesTopRatedResult
+import com.app.movie.presentation.base.BasePagingDataAdapter
 import com.app.movie.presentation.base.BaseViewHolder
 
 class TVSeriesTopRatedAdapter(
-    items: MutableList<TVSeriesTopRatedResult>,
     private val tvSeriesInteraction: TVSeriesInteraction
 ) :
-    BaseRecyclerViewAdapter<TVSeriesTopRatedResult>(items) {
+    BasePagingDataAdapter<TVSeriesTopRatedResult>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return TVSeriesViewHolder(
             ListItemHorBinding.inflate(
@@ -26,7 +25,7 @@ class TVSeriesTopRatedAdapter(
     ) :
         BaseViewHolder(binding.root) {
         override fun onBind(position: Int) {
-            binding.tvSeries = getItems()[position]
+            binding.tvSeries = getItems(position)
             binding.tvInteraction = tvSeriesInteraction
             binding.executePendingBindings()
 

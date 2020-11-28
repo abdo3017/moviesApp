@@ -1,7 +1,7 @@
 package com.app.movie.datasource.cache.mappers
 
-import com.app.movie.datasource.cache.models.MovieUpComingCacheEntity
-import com.app.movie.domain.models.MovieUpComing
+import com.app.movie.datasource.cache.models.movies.MovieUpComingCacheEntity
+import com.app.movie.domain.models.movies.MovieUpComing
 import com.app.movie.utils.Mapper
 import javax.inject.Inject
 

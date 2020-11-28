@@ -32,7 +32,7 @@
         tools:layout="@layout/fragment_movie_details">
         <argument
             android:name="movieDetails"
-            app:argType="com.app.movie.datasource.network.models.MovieNowPlayingResultsItem"
+            app:argType="com.app.movie.datasource.network.models.movies.MovieNowPlayingResultsItem"
             app:nullable="false" />
     </fragment>
     <fragment
@@ -42,12 +42,12 @@
         tools:layout="@layout/fragment_t_v_series_details">
         <argument
             android:name="TVSeriesDetails"
-            app:argType="com.app.movie.datasource.network.models.TVSeriesTopRatedResult"
+            app:argType="com.app.movie.datasource.network.models.tv.TVSeriesTopRatedResult"
             app:nullable="false" />
     </fragment>
     <fragment
         android:id="@+id/moviesFragment"
-        android:name="com.app.movie.presentation.ui.movies.MoviesFragment"
+        android:name="com.app.movie.presentation.ui.movies.main.MoviesFragment"
         android:label="MoviesFragment"
         tools:layout="@layout/fragment_movies" />
 

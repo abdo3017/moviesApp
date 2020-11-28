@@ -1,7 +1,7 @@
 package com.app.movie.datasource.cache.mappers
 
-import com.app.movie.datasource.cache.models.TVSeriesTopRatedCacheEntity
-import com.app.movie.domain.models.TVSeriesTopRated
+import com.app.movie.datasource.cache.models.tv.TVSeriesTopRatedCacheEntity
+import com.app.movie.domain.models.tv.TVSeriesTopRated
 import com.app.movie.utils.Mapper
 import javax.inject.Inject
 

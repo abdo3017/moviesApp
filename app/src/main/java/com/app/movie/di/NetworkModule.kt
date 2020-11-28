@@ -1,10 +1,18 @@
 package com.app.movie.di
 
-import com.app.movie.datasource.network.api.MovieService
-import com.app.movie.datasource.network.api.TVService
+import com.app.movie.datasource.network.api.TVSeries.TVService
+import com.app.movie.datasource.network.api.movies.MovieService
 import com.app.movie.datasource.network.mappers.*
-import com.app.movie.datasource.network.models.*
-import com.app.movie.domain.models.*
+import com.app.movie.datasource.network.models.movies.*
+import com.app.movie.datasource.network.models.tv.TVSeriesAiringTodayNetworkEntity
+import com.app.movie.datasource.network.models.tv.TVSeriesOnTheAirNetworkEntity
+import com.app.movie.datasource.network.models.tv.TVSeriesPopularNetworkEntity
+import com.app.movie.datasource.network.models.tv.TVSeriesTopRatedNetworkEntity
+import com.app.movie.domain.models.movies.*
+import com.app.movie.domain.models.tv.TVSeriesAiringToday
+import com.app.movie.domain.models.tv.TVSeriesOnTheAir
+import com.app.movie.domain.models.tv.TVSeriesPopular
+import com.app.movie.domain.models.tv.TVSeriesTopRated
 import com.app.movie.utils.Constants
 import com.app.movie.utils.Mapper
 import com.google.gson.Gson

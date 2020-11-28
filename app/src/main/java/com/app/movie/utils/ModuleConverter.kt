@@ -1,7 +1,11 @@
 package com.app.movie.utils
 
 import androidx.room.TypeConverter
-import com.app.movie.datasource.network.models.*
+import com.app.movie.datasource.network.models.movies.*
+import com.app.movie.datasource.network.models.tv.TVSeriesAiringTodayResult
+import com.app.movie.datasource.network.models.tv.TVSeriesOnTheAirResult
+import com.app.movie.datasource.network.models.tv.TVSeriesPopularResult
+import com.app.movie.datasource.network.models.tv.TVSeriesTopRatedResult
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 

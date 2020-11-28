@@ -5,7 +5,11 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.app.movie.datasource.cache.database.dao.MovieDao
 import com.app.movie.datasource.cache.database.dao.TVSeriesDao
-import com.app.movie.datasource.cache.models.*
+import com.app.movie.datasource.cache.models.movies.*
+import com.app.movie.datasource.cache.models.tv.TVSeriesAiringTodayCacheEntity
+import com.app.movie.datasource.cache.models.tv.TVSeriesOnTheAirCacheEntity
+import com.app.movie.datasource.cache.models.tv.TVSeriesPopularCacheEntity
+import com.app.movie.datasource.cache.models.tv.TVSeriesTopRatedCacheEntity
 import com.app.movie.utils.ModuleConverter
 
 @Database(

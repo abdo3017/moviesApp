@@ -7,7 +7,7 @@
 
         <variable
             name="movieDetails"
-            type="com.app.movie.datasource.network.models.MovieNowPlayingResultsItem" />
+            type="com.app.movie.datasource.network.models.movies.MovieNowPlayingResultsItem" />
 
     </data>
 

@@ -1,7 +1,7 @@
 package com.app.movie.datasource.cache.mappers
 
-import com.app.movie.datasource.cache.models.TVSeriesAiringTodayCacheEntity
-import com.app.movie.domain.models.TVSeriesAiringToday
+import com.app.movie.datasource.cache.models.tv.TVSeriesAiringTodayCacheEntity
+import com.app.movie.domain.models.tv.TVSeriesAiringToday
 import com.app.movie.utils.Mapper
 import javax.inject.Inject
 

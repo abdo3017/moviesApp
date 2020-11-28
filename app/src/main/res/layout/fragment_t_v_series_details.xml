@@ -7,7 +7,7 @@
 
         <variable
             name="TVSeriesDetails"
-            type="com.app.movie.datasource.network.models.TVSeriesTopRatedResult" />
+            type="com.app.movie.datasource.network.models.tv.TVSeriesTopRatedResult" />
 
     </data>
 

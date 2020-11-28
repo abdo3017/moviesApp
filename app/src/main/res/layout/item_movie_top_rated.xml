@@ -9,7 +9,7 @@
 
         <variable
             name="movie"
-            type="com.app.movie.datasource.network.models.MovieTopRatedResult" />
+            type="com.app.movie.datasource.network.models.movies.MovieTopRatedResult" />
 
         <variable
             name="isDetailsVisible"

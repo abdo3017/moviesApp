@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="isDetailsVisible"
+            type="Boolean" />
+    </data>
+
+    <FrameLayout
+        android:id="@+id/containerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/round_rectangle_white_transparent">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vpTVSeries"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/buttonsLayoutTVSeries">
+
+
+        </androidx.viewpager.widget.ViewPager>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tpTVSeries"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:layout_gravity="center|top"
+            android:layout_marginTop="@dimen/_50sdp"
+            android:background="@null"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonsLayoutTVSeries"
+            app:tabBackground="@drawable/tab_selector"
+            app:tabIndicatorColor="#00000000"
+            app:tabMaxWidth="19dp"
+            app:tabMinWidth="19dp" />
+
+        <HorizontalScrollView
+            android:id="@+id/buttonsLayoutTVSeries"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:scrollbars="none"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent">
+
+                <TextView
+                    android:id="@+id/tvOnTheAir"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10ssp"
+                    android:layout_marginTop="@dimen/_12ssp"
+                    android:layout_marginBottom="@dimen/_4sdp"
+                    android:background="@drawable/rounded_view"
+                    android:clickable="true"
+                    android:elevation="4dp"
+                    android:focusable="true"
+                    android:maxLines="1"
+                    android:paddingStart="@dimen/_9sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_9sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="@string/on_the_air"
+                    android:textColor="@color/colorText"
+                    android:textSize="@dimen/_13ssp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/tvTopRated"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvTopRated"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10ssp"
+                    android:layout_marginTop="@dimen/_12ssp"
+                    android:layout_marginBottom="@dimen/_4sdp"
+                    android:background="@drawable/rounded_view"
+                    android:elevation="4dp"
+                    android:maxLines="1"
+                    android:paddingStart="@dimen/_9sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_9sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="@string/topRated"
+                    android:textColor="@color/colorText"
+                    android:textSize="@dimen/_13ssp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/tvAiringToday"
+                    app:layout_constraintStart_toEndOf="@+id/tvOnTheAir"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvAiringToday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10ssp"
+                    android:layout_marginTop="@dimen/_12ssp"
+                    android:layout_marginBottom="@dimen/_4sdp"
+                    android:background="@drawable/rounded_view"
+                    android:elevation="4dp"
+                    android:maxLines="1"
+                    android:paddingStart="@dimen/_7sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_9sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="@string/airing_today"
+                    android:textColor="@color/colorText"
+                    android:textSize="@dimen/_13ssp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/tvPopular"
+                    app:layout_constraintStart_toEndOf="@+id/tvTopRated"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvPopular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10ssp"
+                    android:layout_marginTop="@dimen/_12ssp"
+                    android:layout_marginEnd="@dimen/_10ssp"
+                    android:layout_marginBottom="@dimen/_4sdp"
+                    android:background="@drawable/rounded_view"
+                    android:elevation="4dp"
+                    android:maxLines="1"
+                    android:paddingStart="@dimen/_9sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_9sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="@string/popular"
+                    android:textColor="@color/colorText"
+                    android:textSize="@dimen/_13ssp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tvAiringToday"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </HorizontalScrollView>
+
+    </FrameLayout>
+
+
+</layout>

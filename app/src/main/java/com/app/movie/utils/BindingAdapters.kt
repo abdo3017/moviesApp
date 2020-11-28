@@ -4,6 +4,7 @@ import android.widget.ImageView
 import android.widget.RatingBar
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.app.movie.R
 import com.app.movie.presentation.base.BaseRecyclerViewAdapter
 import com.app.movie.utils.Constants.IMAGE_BASE_URL
 import com.bumptech.glide.Glide
@@ -27,7 +28,8 @@ object BindingAdapters {
     fun setMovieTrailerImage(movieTrailerThumbnail: ImageView, trailerKey: String?) {
         Glide.with(movieTrailerThumbnail.context)
             .load(Constants.YOUTUBE_VIDEO_THUMBNAIL + trailerKey + "/0.jpg")
-            .diskCacheStrategy(DiskCacheStrategy.DATA)
+            .placeholder(R.mipmap.hustle)
+            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
             .into(movieTrailerThumbnail)
     }
 
@@ -43,7 +45,8 @@ object BindingAdapters {
         if (url != null) {
             val context = image.context
             Glide.with(context).load("https://image.tmdb.org/t/p/original/$url")
-                .diskCacheStrategy(DiskCacheStrategy.DATA)
+                .placeholder(R.mipmap.hustle)
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .into(image)
         }
     }
@@ -54,7 +57,8 @@ object BindingAdapters {
         if (url != null) {
             val context = image.context
             Glide.with(context).load("https://image.tmdb.org/t/p/w200/$url")
-                .diskCacheStrategy(DiskCacheStrategy.DATA)
+                .placeholder(R.mipmap.hustle)
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .into(image)
         }
     }
@@ -65,6 +69,7 @@ object BindingAdapters {
         url?.let {
             Glide.with(imageView)
                 .load(IMAGE_BASE_URL + url)
+                .placeholder(R.mipmap.hustle)
                 .into(imageView)
         }
     }

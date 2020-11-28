@@ -1,7 +1,7 @@
 package com.app.movie.datasource.cache.mappers
 
-import com.app.movie.datasource.cache.models.MovieNowPlayingCacheEntity
-import com.app.movie.domain.models.MovieNowPlaying
+import com.app.movie.datasource.cache.models.movies.MovieNowPlayingCacheEntity
+import com.app.movie.domain.models.movies.MovieNowPlaying
 import com.app.movie.utils.Mapper
 import javax.inject.Inject
 

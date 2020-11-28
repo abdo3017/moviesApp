@@ -11,7 +11,7 @@
 
         <variable
             name="tvSeries"
-            type="com.app.movie.datasource.network.models.TVSeriesTopRatedResult" />
+            type="com.app.movie.datasource.network.models.tv.TVSeriesTopRatedResult" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
