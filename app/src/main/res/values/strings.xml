@@ -29,6 +29,11 @@
     <string name="background">background</string>
     <string name="on_the_air">on the air</string>
     <string name="airing_today">airing today</string>
+    <string name="family">family</string>
+    <string name="drama">drama</string>
+    <string name="action">action</string>
+    <string name="fantasy">fantasy</string>
+    <string name="comedy">comedy</string>
 
 
 </resources>

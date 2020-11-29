@@ -1,35 +1,35 @@
-package com.app.movie.presentation.ui.movies.popular
+package com.app.movie.presentation.ui.tv.ontheair
 
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.app.movie.databinding.ItemMoviePopularBinding
-import com.app.movie.datasource.network.models.movies.MoviePopularResult
+import com.app.movie.databinding.ItemTVOnTheAirBinding
+import com.app.movie.datasource.network.models.tv.TVSeriesOnTheAirResult
 import com.app.movie.presentation.base.BasePagingDataAdapter
 import com.app.movie.presentation.base.BaseViewHolder
 
-class MoviePopularAdapter(
-    private val movieInteraction: MoviesInteraction
+class TVSeriesOnTheAirAdapter(
+    private val tvSeriesInteraction: TVSeriesInteraction
 ) :
-    BasePagingDataAdapter<MoviePopularResult>() {
+    BasePagingDataAdapter<TVSeriesOnTheAirResult>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-        return MoviePopularViewHolder(
-            ItemMoviePopularBinding.inflate(
+        return TVSeriesOnTheAirViewHolder(
+            ItemTVOnTheAirBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
-            ), movieInteraction
+            ), tvSeriesInteraction
         )
     }
 
-    inner class MoviePopularViewHolder(
-        private val binding: ItemMoviePopularBinding,
-        private val movieInteraction: MoviesInteraction
+    inner class TVSeriesOnTheAirViewHolder(
+        private val binding: ItemTVOnTheAirBinding,
+        private val tvSeriesInteraction1: TVSeriesInteraction
     ) :
         BaseViewHolder(binding.root) {
         override fun onBind(position: Int) {
-            binding.movie = getItem(position)
+            binding.tv = getItem(position)
             binding.executePendingBindings()
-            binding.detailsViewPopular.actorsRecyclerViewPopular.addOnItemTouchListener(object :
+            binding.detailsOnTheAir.actorsRecyclerViewOnTheAir.addOnItemTouchListener(object :
                 RecyclerView.OnItemTouchListener {
                 override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
                     when (e.action) {
@@ -48,18 +48,18 @@ class MoviePopularAdapter(
             })
             //Notify the listener on movie item click
             itemView.setOnClickListener {
-                movieInteraction.onMovieItemSelected(adapterPosition, getItem(position)!!, binding)
+                tvSeriesInteraction1.onItemSelected(adapterPosition, getItem(position)!!, binding)
             }
         }
 
     }
 
     //We use interface to notify the activity with every selection like onItemSelected , onBookmarkSelected
-    interface MoviesInteraction {
-        fun onMovieItemSelected(
+    interface TVSeriesInteraction {
+        fun onItemSelected(
             position: Int,
-            item: MoviePopularResult,
-            binding: ItemMoviePopularBinding
+            item: TVSeriesOnTheAirResult,
+            binding: ItemTVOnTheAirBinding
         )
     }
 

@@ -14,7 +14,7 @@
         app:showAsAction="always"
         android:title="@string/movie" />
     <item
-        android:id="@+id/tvFragment"
+        android:id="@+id/TVSeriesFragment"
         android:icon="@drawable/ic_tv"
 
         android:orderInCategory="3"

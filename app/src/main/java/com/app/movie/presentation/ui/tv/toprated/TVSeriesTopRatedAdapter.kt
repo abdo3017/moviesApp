@@ -1,33 +1,33 @@
-package com.app.movie.presentation.ui.movies.toprated
+package com.app.movie.presentation.ui.tv.toprated
 
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.app.movie.databinding.ItemMovieTopRatedBinding
-import com.app.movie.datasource.network.models.movies.MovieTopRatedResult
+import com.app.movie.databinding.ItemTVTopRatedBinding
+import com.app.movie.datasource.network.models.tv.TVSeriesTopRatedResult
 import com.app.movie.presentation.base.BasePagingDataAdapter
 import com.app.movie.presentation.base.BaseViewHolder
 
-class MovieTopRatedAdapter(
-    private val movieInteraction: MoviesInteraction
+class TVSeriesTopRatedAdapter(
+    private val interaction: TVSeriesInteraction
 ) :
-    BasePagingDataAdapter<MovieTopRatedResult>() {
+    BasePagingDataAdapter<TVSeriesTopRatedResult>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-        return MovieTopRatedViewHolder(
-            ItemMovieTopRatedBinding.inflate(
+        return TVSerieTopRatedViewHolder(
+            ItemTVTopRatedBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
-            ), movieInteraction
+            ), interaction
         )
     }
 
-    inner class MovieTopRatedViewHolder(
-        private val binding: ItemMovieTopRatedBinding,
-        private val movieInteraction: MoviesInteraction
+    inner class TVSerieTopRatedViewHolder(
+        private val binding: ItemTVTopRatedBinding,
+        private val tvSeriesInteraction: TVSeriesInteraction
     ) :
         BaseViewHolder(binding.root) {
         override fun onBind(position: Int) {
-            binding.movie = getItem(position)
+            binding.tv = getItem(position)
             binding.executePendingBindings()
             binding.detailsViewTopRated.actorsRecyclerViewTopRated.addOnItemTouchListener(object :
                 RecyclerView.OnItemTouchListener {
@@ -48,18 +48,22 @@ class MovieTopRatedAdapter(
             })
             //Notify the listener on movie item click
             itemView.setOnClickListener {
-                movieInteraction.onMovieItemSelected(adapterPosition, getItem(position)!!, binding)
+                tvSeriesInteraction.itemSelected(
+                    adapterPosition,
+                    getItem(position)!!,
+                    binding
+                )
             }
         }
 
     }
 
     //We use interface to notify the activity with every selection like onItemSelected , onBookmarkSelected
-    interface MoviesInteraction {
-        fun onMovieItemSelected(
+    interface TVSeriesInteraction {
+        fun itemSelected(
             position: Int,
-            item: MovieTopRatedResult,
-            binding: ItemMovieTopRatedBinding
+            item: TVSeriesTopRatedResult,
+            binding: ItemTVTopRatedBinding
         )
     }
 

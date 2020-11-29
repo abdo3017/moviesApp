@@ -1,4 +1,4 @@
-package com.app.movie.presentation.ui.movies.popular
+package com.app.movie.presentation.ui.tv.toprated
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,9 +11,9 @@ import androidx.paging.PagingData
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.app.movie.R
-import com.app.movie.databinding.FragmentMoviePopularBinding
-import com.app.movie.databinding.ItemMoviePopularBinding
-import com.app.movie.datasource.network.models.movies.MoviePopularResult
+import com.app.movie.databinding.FragmentTVTopRatedBinding
+import com.app.movie.databinding.ItemTVTopRatedBinding
+import com.app.movie.datasource.network.models.tv.TVSeriesTopRatedResult
 import com.app.movie.presentation.base.BaseFragment
 import com.app.movie.presentation.ui.LoadStateAdapter
 import com.app.movie.utils.BindingAdapters
@@ -25,34 +25,21 @@ import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class MoviePopularFragment(private val items: Flow<PagingData<MoviePopularResult>>) :
-    BaseFragment<FragmentMoviePopularBinding, Any>(),
-    MoviePopularAdapter.MoviesInteraction {
-
-    private var lastSelectedItemBinding: ItemMoviePopularBinding? = null
+class TVSeriesTopRatedFragment(private val items: Flow<PagingData<TVSeriesTopRatedResult>>) :
+    BaseFragment<FragmentTVTopRatedBinding, Any>(), TVSeriesTopRatedAdapter.TVSeriesInteraction {
+    private var lastSelectedItemBinding: ItemTVTopRatedBinding? = null
     private lateinit var layoutManager: CenterZoomLayoutManager
-    private var adapter: MoviePopularAdapter = MoviePopularAdapter(this)
     private var lastVisibleItemWhiteBoarder: ConstraintLayout? = null
+    private var adapter: TVSeriesTopRatedAdapter = TVSeriesTopRatedAdapter(this)
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Inflate the layout for this fragment
         super.onCreateView(inflater, container, savedInstanceState)
         getData()
         setUp()
         return getMRootView()
-    }
-
-    override val layoutId: Int
-        get() = R.layout.fragment_movie_popular
-    override val bindingVariableId: Int
-        get() = 0
-    override val bindingVariableValue: Any
-        get() = Any()
-
-    override fun getViewModel(): Any {
-        return Any()
     }
 
     private fun getData() {
@@ -67,13 +54,13 @@ class MoviePopularFragment(private val items: Flow<PagingData<MoviePopularResult
     private fun setUp() {
         //Setup recyclerView
         layoutManager = CenterZoomLayoutManager(requireContext())
-        getViewDataBinding().rvMoviesPopular.layoutManager = layoutManager
+        getViewDataBinding().rvTVSeriesTopRated.layoutManager = layoutManager
 
 
         val pagerSnapHelper = PagerSnapHelper()
-        pagerSnapHelper.attachToRecyclerView(getViewDataBinding().rvMoviesPopular)
+        pagerSnapHelper.attachToRecyclerView(getViewDataBinding().rvTVSeriesTopRated)
 
-        getViewDataBinding().rvMoviesPopular.addOnScrollListener(object :
+        getViewDataBinding().rvTVSeriesTopRated.addOnScrollListener(object :
             RecyclerView.OnScrollListener() {
 
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -89,7 +76,7 @@ class MoviePopularFragment(private val items: Flow<PagingData<MoviePopularResult
                 }
             }
         })
-        getViewDataBinding().rvMoviesPopular.adapter = adapter.withLoadStateHeaderAndFooter(
+        getViewDataBinding().rvTVSeriesTopRated.adapter = adapter.withLoadStateHeaderAndFooter(
             header = LoadStateAdapter { adapter.retry() },
             footer = LoadStateAdapter { adapter.retry() }
         )
@@ -99,20 +86,33 @@ class MoviePopularFragment(private val items: Flow<PagingData<MoviePopularResult
                 .distinctUntilChangedBy { it.refresh }
                 // Only react to cases where REFRESH completes i.e., NotLoading.
                 .filter { it.refresh is LoadState.NotLoading }
-                .collect { getViewDataBinding().rvMoviesPopular.scrollToPosition(0) }
+                .collect { getViewDataBinding().rvTVSeriesTopRated.scrollToPosition(0) }
         }
     }
 
+    override fun itemSelected(
+        position: Int,
+        item: TVSeriesTopRatedResult,
+        binding: ItemTVTopRatedBinding
+    ) {
 
-    private fun onFocusedItemChange(movie: MoviePopularResult, view: View) {
+        //Hide last selected item details
+        lastSelectedItemBinding?.let { displayTVDetails(it, false) }
+
+        //Display selected item details
+        if (lastSelectedItemBinding != binding)
+            displayTVDetails(binding, true)
+    }
+
+    private fun onFocusedItemChange(item: TVSeriesTopRatedResult, view: View) {
         //change card boarder color
         changeTransparentOfFocusedItem(view)
         //Change background image
-        changeBackgroundImage(movie)
+        changeBackgroundImage(item)
 
     }
 
-    private fun displayMovieDetails(binding: ItemMoviePopularBinding, show: Boolean) {
+    private fun displayTVDetails(binding: ItemTVTopRatedBinding, show: Boolean) {
         //Hide Image
         val params = binding.posterGuideline.layoutParams as ConstraintLayout.LayoutParams
         if (show) params.guidePercent = 0.0f
@@ -136,21 +136,19 @@ class MoviePopularFragment(private val items: Flow<PagingData<MoviePopularResult
         lastVisibleItemWhiteBoarder = whiteImageView
     }
 
-    private fun changeBackgroundImage(movie: MoviePopularResult) {
+    private fun changeBackgroundImage(movie: TVSeriesTopRatedResult) {
         BindingAdapters.loadImage(getViewDataBinding().backgroundImageView, movie.posterPath)
     }
 
-    override fun onMovieItemSelected(
-        position: Int,
-        item: MoviePopularResult,
-        binding: ItemMoviePopularBinding
-    ) {
-        //Hide last selected item details
-        lastSelectedItemBinding?.let { displayMovieDetails(it, false) }
+    override val layoutId: Int
+        get() = R.layout.fragment_t_v_top_rated
+    override val bindingVariableId: Int
+        get() = 0
+    override val bindingVariableValue: Any
+        get() = Any()
 
-        //Display selected item details
-        if (lastSelectedItemBinding != binding)
-            displayMovieDetails(binding, true)
+    override fun getViewModel(): Any {
+        return Any()
     }
 
 }

@@ -24,6 +24,9 @@
         <action
             android:id="@+id/action_homeFragment_to_moviesFragment"
             app:destination="@id/moviesFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_TVSeriesFragment"
+            app:destination="@id/TVSeriesFragment" />
     </fragment>
     <fragment
         android:id="@+id/movieDetailsFragment"
@@ -50,6 +53,11 @@
         android:name="com.app.movie.presentation.ui.movies.main.MoviesFragment"
         android:label="MoviesFragment"
         tools:layout="@layout/fragment_movies" />
+    <fragment
+        android:id="@+id/TVSeriesFragment"
+        android:name="com.app.movie.presentation.ui.tv.main.TVSeriesFragment"
+        android:label="TVSeriesFragment"
+        tools:layout="@layout/fragment_t_v" />
 
 
 </navigation>
