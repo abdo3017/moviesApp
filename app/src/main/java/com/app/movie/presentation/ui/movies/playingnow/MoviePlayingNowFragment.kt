@@ -15,7 +15,7 @@ import com.app.movie.databinding.FragmentMoviePlayingNowBinding
 import com.app.movie.databinding.ItemMoviePlayingNowBinding
 import com.app.movie.datasource.network.models.movies.MovieNowPlayingResultsItem
 import com.app.movie.presentation.base.BaseFragment
-import com.app.movie.presentation.ui.LoadStateAdapter
+import com.app.movie.presentation.base.LoadStateAdapter
 import com.app.movie.utils.BindingAdapters.loadImage
 import com.app.movie.utils.CenterZoomLayoutManager
 import dagger.hilt.android.AndroidEntryPoint

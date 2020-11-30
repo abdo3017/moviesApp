@@ -15,7 +15,7 @@ import com.app.movie.databinding.FragmentMovieTopRatedBinding
 import com.app.movie.databinding.ItemMovieTopRatedBinding
 import com.app.movie.datasource.network.models.movies.MovieTopRatedResult
 import com.app.movie.presentation.base.BaseFragment
-import com.app.movie.presentation.ui.LoadStateAdapter
+import com.app.movie.presentation.base.LoadStateAdapter
 import com.app.movie.utils.BindingAdapters
 import com.app.movie.utils.CenterZoomLayoutManager
 import dagger.hilt.android.AndroidEntryPoint

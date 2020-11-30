@@ -16,7 +16,7 @@ import com.app.movie.databinding.FragmentHomeBinding
 import com.app.movie.datasource.network.models.movies.MovieNowPlayingResultsItem
 import com.app.movie.datasource.network.models.tv.TVSeriesTopRatedResult
 import com.app.movie.presentation.base.BaseFragment
-import com.app.movie.presentation.ui.LoadStateAdapter
+import com.app.movie.presentation.base.LoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_movie_details.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi

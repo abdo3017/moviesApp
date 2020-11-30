@@ -1,4 +1,4 @@
-package com.app.movie.presentation.ui
+package com.app.movie.presentation.base
 
 import android.view.ViewGroup
 import androidx.paging.LoadState
