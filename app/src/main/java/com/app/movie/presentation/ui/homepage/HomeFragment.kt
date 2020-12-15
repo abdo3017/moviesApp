@@ -13,9 +13,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.app.movie.R
 import com.app.movie.databinding.FragmentHomeBinding
-import com.app.movie.datasource.network.models.movies.MovieNowPlayingResultsItem
-import com.app.movie.datasource.network.models.tv.TVSeriesTopRatedResult
 import com.app.movie.presentation.base.BaseFragment
+import com.app.movie.presentation.base.ItemClickListener
 import com.app.movie.presentation.base.LoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_movie_details.*
@@ -30,12 +29,10 @@ import kotlinx.coroutines.launch
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class HomeFragment :
-    BaseFragment<FragmentHomeBinding, HomeViewModel>(), HomeMoviePlayingNowAdapter.MovieInteraction,
-    TVSeriesTopRatedAdapter.TVSeriesInteraction {
-
+    BaseFragment<FragmentHomeBinding, HomeViewModel>() {
     private val homeViewModel: HomeViewModel by viewModels()
-    private val moviePlayingNowAdapter = HomeMoviePlayingNowAdapter(this)
-    private val tvSeriesTopRatedAdapter = TVSeriesTopRatedAdapter(this)
+    private lateinit var moviePlayingNowAdapter: HomeMoviePlayingNowAdapter
+    private lateinit var tvSeriesTopRatedAdapter: TVSeriesTopRatedAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,14 +62,23 @@ class HomeFragment :
                     tvSeriesTopRatedAdapter.submitData(it)
                 }
             }
+            val favMovie = async {
+                getViewModel().getFavMoviesNowPlaying()
+            }
+            val favTV = async {
+                getViewModel().getFavTVSeriesTopRated()
+            }
+            favTV.await()
+            favMovie.await()
             movie.await()
             tvSeries.await()
         }
     }
 
-
     private fun setViews() {
-
+        moviePlayingNowAdapter = HomeMoviePlayingNowAdapter(onMovieClick())
+        tvSeriesTopRatedAdapter = TVSeriesTopRatedAdapter(onTVClick())
+        getViewDataBinding().lifecycleOwner = this
         getViewDataBinding().rvMoviesPlayingNow.adapter =
             moviePlayingNowAdapter.withLoadStateHeaderAndFooter(
                 header = LoadStateAdapter { moviePlayingNowAdapter.retry() },
@@ -123,6 +129,14 @@ class HomeFragment :
             }
         }
 
+        getViewModel().dataStateMovieNowPlaying.observe(viewLifecycleOwner, {
+            moviePlayingNowAdapter.addFavItems(it)
+        })
+
+        getViewModel().dataStateTVSeriesTopRated.observe(viewLifecycleOwner, {
+            tvSeriesTopRatedAdapter.addFavItems(it)
+        })
+
         tvSeriesTopRatedAdapter.addLoadStateListener { loadState ->
             when (loadState.source.refresh) {
                 is LoadState.Loading -> {
@@ -152,27 +166,62 @@ class HomeFragment :
     override val bindingVariableValue: Any
         get() = getViewModel()
 
-    override fun onMovieItemSelected(item: MovieNowPlayingResultsItem) {
-        val extras = FragmentNavigatorExtras(
-            imageViewHome to "imageViewHome"
-        )
-        findNavController().navigate(
-            HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(
-                item
-            ), extras
-        )
+    private fun onMovieClick() = ItemClickListener { position: Int, view: View ->
+        if (view.id == R.id.imageViewHome) {
+            val extras = FragmentNavigatorExtras(
+                imageViewHome to "imageViewHome"
+            )
+            findNavController().navigate(
+                HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(
+                    moviePlayingNowAdapter.getItems(position)
+                ), extras
+            )
+        } else {
+            if (moviePlayingNowAdapter.listView[position]!!.isFav == false) {
+                getViewModel().insertFavMoviesNowPlaying(
+                    moviePlayingNowAdapter.getItems(
+                        position
+                    )
+                )
+                moviePlayingNowAdapter.listView[position]?.isFav = true
+            } else {
+                getViewModel().deleteFavMoviesNowPlaying(
+                    moviePlayingNowAdapter.getItems(
+                        position
+                    )
+                )
+                moviePlayingNowAdapter.listView[position]?.isFav = false
+            }
+        }
     }
 
-    override fun onTVSeriesItemSelected(item: TVSeriesTopRatedResult) {
-        val extras = FragmentNavigatorExtras(
-            imageViewHome to "imageViewHome"
-        )
-        findNavController().navigate(
-            HomeFragmentDirections.actionHomeFragmentToTVSeriesDetailsFragment(
-                item
-            ), extras
-        )
+    private fun onTVClick() = ItemClickListener { position: Int, view: View ->
+        if (view.id == R.id.imageViewHome) {
+            val extras = FragmentNavigatorExtras(
+                imageViewHome to "imageViewHome"
+            )
+            findNavController().navigate(
+                HomeFragmentDirections.actionHomeFragmentToTVSeriesDetailsFragment(
+                    tvSeriesTopRatedAdapter.getItems(position)
+                ), extras
+            )
+        } else {
+            if (tvSeriesTopRatedAdapter.listView[position]!!.isFav == false) {
+                getViewModel().insertFavTVSeriesTopRated(
+                    tvSeriesTopRatedAdapter.getItems(
+                        position
+                    )
+                )
+                tvSeriesTopRatedAdapter.listView[position]?.isFav = true
+            } else {
+                getViewModel().deleteFavTVSeriesTopRated(
+                    tvSeriesTopRatedAdapter.getItems(
+                        position
+                    )
+                )
+                tvSeriesTopRatedAdapter.listView[position]?.isFav = false
+            }
+        }
     }
-
 
 }

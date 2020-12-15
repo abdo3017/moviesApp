@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.paging.PagingData
@@ -15,30 +16,36 @@ import com.app.movie.databinding.FragmentTVTopRatedBinding
 import com.app.movie.databinding.ItemTVTopRatedBinding
 import com.app.movie.datasource.network.models.tv.TVSeriesTopRatedResult
 import com.app.movie.presentation.base.BaseFragment
+import com.app.movie.presentation.base.ItemClickListener
 import com.app.movie.presentation.base.LoadStateAdapter
+import com.app.movie.presentation.ui.tv.main.TVSeriesViewModel
 import com.app.movie.utils.BindingAdapters
 import com.app.movie.utils.CenterZoomLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class TVSeriesTopRatedFragment(private val items: Flow<PagingData<TVSeriesTopRatedResult>>) :
-    BaseFragment<FragmentTVTopRatedBinding, Any>(), TVSeriesTopRatedAdapter.TVSeriesInteraction {
+    BaseFragment<FragmentTVTopRatedBinding, TVSeriesViewModel>() {
+    private val tvSeriesViewModel: TVSeriesViewModel by viewModels()
+
     private var lastSelectedItemBinding: ItemTVTopRatedBinding? = null
     private lateinit var layoutManager: CenterZoomLayoutManager
     private var lastVisibleItemWhiteBoarder: ConstraintLayout? = null
-    private var adapter: TVSeriesTopRatedAdapter = TVSeriesTopRatedAdapter(this)
+    private lateinit var adapter: TVSeriesTopRatedAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         super.onCreateView(inflater, container, savedInstanceState)
-        getData()
         setUp()
+        getData()
+        observeData()
         return getMRootView()
     }
 
@@ -47,11 +54,22 @@ class TVSeriesTopRatedFragment(private val items: Flow<PagingData<TVSeriesTopRat
             items.collectLatest {
                 adapter.submitData(it)
             }
+            val favTV = async {
+                getViewModel().getFavTVSeriesTopRated()
+            }
+            favTV.await()
         }
 
     }
 
+    private fun observeData() {
+        getViewModel().dataStateTVSeriesTopRated.observe(viewLifecycleOwner, {
+            adapter.addFavItems(it)
+        })
+    }
+
     private fun setUp() {
+        adapter = TVSeriesTopRatedAdapter(onItemSelected())
         //Setup recyclerView
         layoutManager = CenterZoomLayoutManager(requireContext())
         getViewDataBinding().rvTVSeriesTopRated.layoutManager = layoutManager
@@ -90,19 +108,23 @@ class TVSeriesTopRatedFragment(private val items: Flow<PagingData<TVSeriesTopRat
         }
     }
 
-    override fun itemSelected(
-        position: Int,
-        item: TVSeriesTopRatedResult,
-        binding: ItemTVTopRatedBinding
-    ) {
-
-        //Hide last selected item details
-        lastSelectedItemBinding?.let { displayTVDetails(it, false) }
-
+    private fun onItemSelected() = ItemClickListener { position: Int, view: View ->
         //Display selected item details
-        if (lastSelectedItemBinding != binding)
-            displayTVDetails(binding, true)
+        if (lastSelectedItemBinding != adapter.listView[position])
+            displayTVDetails(adapter.listView[position]!!, true)
+        else {
+            //Hide selected item details
+            if (lastSelectedItemBinding!!.isDetailsVisible == true)
+                lastSelectedItemBinding?.let {
+                    displayTVDetails(it, false)
+                }
+            //Display selected item details
+            else lastSelectedItemBinding?.let {
+                displayTVDetails(it, true)
+            }
+        }
     }
+
 
     private fun onFocusedItemChange(item: TVSeriesTopRatedResult, view: View) {
         //change card boarder color
@@ -147,8 +169,7 @@ class TVSeriesTopRatedFragment(private val items: Flow<PagingData<TVSeriesTopRat
     override val bindingVariableValue: Any
         get() = Any()
 
-    override fun getViewModel(): Any {
-        return Any()
-    }
+    override fun getViewModel() = tvSeriesViewModel
+
 
 }

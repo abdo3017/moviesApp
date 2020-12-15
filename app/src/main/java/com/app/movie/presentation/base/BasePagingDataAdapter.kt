@@ -5,12 +5,17 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 
 
-abstract class BasePagingDataAdapter<T : Any> :
+abstract class BasePagingDataAdapter<T : Any, R : Any> :
     PagingDataAdapter<T, BaseViewHolder>(MovieDiffCallback<T>()) {
+    var listView: HashMap<Int, R> = HashMap()
+    var list: List<T> = emptyList()
+    var favouriteList: List<T> = emptyList()
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         holder.onBind(position)
     }
+
+    abstract fun addFavItems(favouriteList: List<T>)
 
     fun getItems(position: Int): T {
         return getItem(position)!!

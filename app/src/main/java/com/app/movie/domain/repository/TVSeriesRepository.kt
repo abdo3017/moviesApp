@@ -1,4 +1,4 @@
-package com.app.movie.domain.repositoryimpl
+package com.app.movie.domain.repository
 
 import androidx.paging.PagingSource
 import com.app.movie.datasource.cache.database.dao.TVSeriesDao
@@ -6,6 +6,7 @@ import com.app.movie.datasource.cache.mappers.TVSeriesAiringTodayCacheMapper
 import com.app.movie.datasource.cache.mappers.TVSeriesOnTheAirCacheMapper
 import com.app.movie.datasource.cache.mappers.TVSeriesPopularCacheMapper
 import com.app.movie.datasource.cache.mappers.TVSeriesTopRatedCacheMapper
+import com.app.movie.datasource.cache.models.favouritetv.asDomainModelList
 import com.app.movie.datasource.cache.models.tv.TVSeriesAiringTodayCacheEntity
 import com.app.movie.datasource.cache.models.tv.TVSeriesOnTheAirCacheEntity
 import com.app.movie.datasource.cache.models.tv.TVSeriesPopularCacheEntity
@@ -15,10 +16,7 @@ import com.app.movie.datasource.network.mappers.TVSeriesAiringTodayNetworkMapper
 import com.app.movie.datasource.network.mappers.TVSeriesOnTheAirNetworkMapper
 import com.app.movie.datasource.network.mappers.TVSeriesPopularNetworkMapper
 import com.app.movie.datasource.network.mappers.TVSeriesTopRatedNetworkMapper
-import com.app.movie.datasource.network.models.tv.TVSeriesAiringTodayResult
-import com.app.movie.datasource.network.models.tv.TVSeriesOnTheAirResult
-import com.app.movie.datasource.network.models.tv.TVSeriesPopularResult
-import com.app.movie.datasource.network.models.tv.TVSeriesTopRatedResult
+import com.app.movie.datasource.network.models.tv.*
 import com.app.movie.domain.models.tv.TVSeriesAiringToday
 import com.app.movie.domain.models.tv.TVSeriesOnTheAir
 import com.app.movie.domain.models.tv.TVSeriesPopular
@@ -29,7 +27,7 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class TVSeriesRepositoryImpl
+class TVSeriesRepository
 @Inject
 constructor(
     private val tvSeriesDao: TVSeriesDao,
@@ -254,4 +252,95 @@ constructor(
         }
     }
 
+    suspend fun getFavTVTopRated(): List<TVSeriesTopRatedResult> {
+        return try {
+            val favTVSeriesTopRatedResultsItemList = tvSeriesDao.getFavListTVSeriesTopRated()
+            favTVSeriesTopRatedResultsItemList.asDomainModelList()
+        } catch (e: java.lang.Exception) {
+            emptyList()
+        }
+    }
+
+    suspend fun insertFavTVTopRated(tvTopRatedResult: TVSeriesTopRatedResult) {
+        try {
+            tvSeriesDao.insertFavTVSeriesTopRated(tvTopRatedResult.asDomainModel())
+        } catch (e: java.lang.Exception) {
+        }
+    }
+
+    suspend fun deleteFavTVTopRated(tvTopRatedResult: TVSeriesTopRatedResult) {
+        try {
+            tvSeriesDao.deleteFavTVSeriesTopRated(tvTopRatedResult.asDomainModel())
+        } catch (e: java.lang.Exception) {
+        }
+    }
+
+    suspend fun getFavTVSeriesOnTheAir(): List<TVSeriesOnTheAirResult> {
+        return try {
+            val favTVSeriesOnTheAirResultsItemList = tvSeriesDao.getFavListTVSeriesOnTheAir()
+            favTVSeriesOnTheAirResultsItemList.asDomainModelList()
+        } catch (e: java.lang.Exception) {
+            emptyList()
+        }
+    }
+
+    suspend fun insertFavTVSeriesOnTheAir(tvOnTheAirResult: TVSeriesOnTheAirResult) {
+        try {
+            tvSeriesDao.insertFavTVSeriesOnTheAir(tvOnTheAirResult.asDomainModel())
+        } catch (e: java.lang.Exception) {
+        }
+    }
+
+    suspend fun deleteFavTVSeriesOnTheAir(tvOnTheAirResult: TVSeriesOnTheAirResult) {
+        try {
+            tvSeriesDao.deleteFavTVSeriesOnTheAir(tvOnTheAirResult.asDomainModel())
+        } catch (e: java.lang.Exception) {
+        }
+    }
+
+    suspend fun getFavTVSeriesPopular(): List<TVSeriesPopularResult> {
+        return try {
+            val favTVSeriesPopularResultsItemList = tvSeriesDao.getFavListTVSeriesPopular()
+            favTVSeriesPopularResultsItemList.asDomainModelList()
+        } catch (e: java.lang.Exception) {
+            emptyList()
+        }
+    }
+
+    suspend fun insertFavTVSeriesPopular(tvPopularResultsItem: TVSeriesPopularResult) {
+        try {
+            tvSeriesDao.insertFavTVSeriesPopular(tvPopularResultsItem.asDomainModel())
+        } catch (e: java.lang.Exception) {
+        }
+    }
+
+    suspend fun deleteFavTVSeriesPopular(tvPopularResultsItem: TVSeriesPopularResult) {
+        try {
+            tvSeriesDao.deleteFavTVSeriesPopular(tvPopularResultsItem.asDomainModel())
+        } catch (e: java.lang.Exception) {
+        }
+    }
+
+    suspend fun getFavTVSeriesAiringToday(): List<TVSeriesAiringTodayResult> {
+        return try {
+            val favTVSeriesAiringTodayResultsItemList = tvSeriesDao.getFavListTVSeriesAiringToday()
+            favTVSeriesAiringTodayResultsItemList.asDomainModelList()
+        } catch (e: java.lang.Exception) {
+            emptyList()
+        }
+    }
+
+    suspend fun insertFavTVSeriesAiringToday(tvPopularResultsItem: TVSeriesAiringTodayResult) {
+        try {
+            tvSeriesDao.insertFavTVSeriesAiringToday(tvPopularResultsItem.asDomainModel())
+        } catch (e: java.lang.Exception) {
+        }
+    }
+
+    suspend fun deleteFavTVSeriesAiringToday(tvPopularResultsItem: TVSeriesAiringTodayResult) {
+        try {
+            tvSeriesDao.deleteFavTVSeriesAiringToday(tvPopularResultsItem.asDomainModel())
+        } catch (e: java.lang.Exception) {
+        }
+    }
 }

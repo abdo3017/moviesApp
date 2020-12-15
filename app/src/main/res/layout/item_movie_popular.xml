@@ -14,10 +14,24 @@
         <variable
             name="isDetailsVisible"
             type="Boolean" />
+
+        <variable
+            name="position"
+            type="java.lang.Integer" />
+
+        <variable
+            name="isFav"
+            type="java.lang.Boolean" />
+
+        <variable
+            name="listener"
+            type="com.app.movie.presentation.base.ItemClickListener" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/containerLayout"
+        android:onClick="@{(thisView) -> listener.onClick(position,thisView)}"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="8dp"

@@ -1,5 +1,6 @@
 package com.app.movie.datasource.network.models.movies
 
+import com.app.movie.datasource.cache.models.favouritemovies.FavMovieNowPlayingResultsItem
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -74,3 +75,6 @@ data class MovieNowPlayingResultsItem(
 	@field:SerializedName("vote_count")
 	val voteCount: Int? = null
 ) : Serializable
+
+fun MovieNowPlayingResultsItem.asDomainModel() = FavMovieNowPlayingResultsItem(id = id)
+

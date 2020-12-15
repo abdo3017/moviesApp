@@ -11,9 +11,9 @@ constructor() : Mapper<TVSeriesTopRatedNetworkEntity, TVSeriesTopRated> {
     override fun mapFromEntity(entity: TVSeriesTopRatedNetworkEntity): TVSeriesTopRated {
 
         return TVSeriesTopRated(
-            page = entity.page,
-            results = entity.results,
-            totalPages = entity.totalPages,
+            page = entity.page!!,
+            results = entity.results!!,
+            totalPages = entity.totalPages!!,
             totalResults = entity.totalResults
         )
     }

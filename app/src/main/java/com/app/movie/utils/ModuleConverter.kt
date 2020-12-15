@@ -115,16 +115,4 @@ class ModuleConverter {
         return gson.fromJson(objString, type)
     }
 
-
-//    private inline fun <reified T> fromJson(value: String): T {
-//        val jsonAdapter = moshi.adapter(T::class.java)
-//        return jsonAdapter.fromJson(value)!!
-//    }
-//
-//    private inline fun <reified T> toJson(value: T): String {
-//        val jsonAdapter = moshi.adapter(T::class.java)
-//        return jsonAdapter.toJson(value)
-//    }
-//
-
 }

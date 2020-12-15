@@ -1,66 +1,42 @@
 package com.app.movie.presentation.ui.tv.popular
 
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import com.app.movie.databinding.ItemTVPopularBinding
 import com.app.movie.datasource.network.models.tv.TVSeriesPopularResult
 import com.app.movie.presentation.base.BasePagingDataAdapter
 import com.app.movie.presentation.base.BaseViewHolder
+import com.app.movie.presentation.base.ItemClickListener
 
 class TVSeriesPopularAdapter(
-    private val tvSeriesInteraction: TVSeriesInteraction
+    private val itemClickListener: ItemClickListener
 ) :
-    BasePagingDataAdapter<TVSeriesPopularResult>() {
+    BasePagingDataAdapter<TVSeriesPopularResult, ItemTVPopularBinding>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return TVSeriesPopularViewHolder(
             ItemTVPopularBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
-            ), tvSeriesInteraction
+            ), itemClickListener
         )
     }
 
     inner class TVSeriesPopularViewHolder(
         private val binding: ItemTVPopularBinding,
-        private val tvSeriesInteraction1: TVSeriesInteraction
+        private val itemClickListener: ItemClickListener
     ) :
         BaseViewHolder(binding.root) {
         override fun onBind(position: Int) {
+            listView[position] = binding
+            binding.isFav = favouriteList.any { it.id == getItem(position)!!.id }
+            binding.position = position
+            binding.listener = itemClickListener
             binding.tv = getItem(position)
             binding.executePendingBindings()
-            binding.detailsViewPopular.actorsRecyclerViewPopular.addOnItemTouchListener(object :
-                RecyclerView.OnItemTouchListener {
-                override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-                    when (e.action) {
-                        MotionEvent.ACTION_MOVE -> rv.parent.requestDisallowInterceptTouchEvent(true)
-                    }
-                    return false
-                }
-
-                override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
-
-                }
-
-                override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
-                }
-
-            })
-            //Notify the listener on movie item click
-            itemView.setOnClickListener {
-                tvSeriesInteraction1.onItemSelected(adapterPosition, getItem(position)!!, binding)
-            }
         }
-
     }
 
-    //We use interface to notify the activity with every selection like onItemSelected , onBookmarkSelected
-    interface TVSeriesInteraction {
-        fun onItemSelected(
-            position: Int,
-            item: TVSeriesPopularResult,
-            binding: ItemTVPopularBinding
-        )
+    override fun addFavItems(favouriteList: List<TVSeriesPopularResult>) {
+        this.favouriteList = favouriteList
     }
 
 }

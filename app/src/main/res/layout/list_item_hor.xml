@@ -6,8 +6,17 @@
     <data>
 
         <variable
-            name="tvInteraction"
-            type="com.app.movie.presentation.ui.homepage.TVSeriesTopRatedAdapter.TVSeriesInteraction" />
+            name="position"
+            type="java.lang.Integer" />
+
+        <variable
+            name="isFav"
+            type="java.lang.Boolean" />
+
+        <variable
+            name="listener"
+            type="com.app.movie.presentation.base.ItemClickListener" />
+
 
         <variable
             name="tvSeries"
@@ -19,8 +28,8 @@
         style="@style/Widget.Card"
         android:layout_width="150dp"
         android:layout_height="200dp"
-        android:onClick="@{() -> tvInteraction.onTVSeriesItemSelected(tvSeries)}"
         android:layout_margin="8dp"
+        android:onClick="@{(thisView) -> listener.onClick(position,thisView)}"
         android:transitionName="shared_element_container"
         app:cardBackgroundColor="@android:color/transparent"
         app:shapeAppearance="@style/Widget.listItem.Corner">
@@ -35,14 +44,14 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:scaleType="fitXY"
-                tools:srcCompat="@mipmap/hustle"
                 android:transitionName="imageViewHome"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:load_poster="@{tvSeries.posterPath}"
-                app:shapeAppearance="@style/Widget.listItem.Corner" />
+                app:shapeAppearance="@style/Widget.listItem.Corner"
+                tools:srcCompat="@mipmap/hustle" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/title"
@@ -61,7 +70,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_10sdp"
-                android:background="@drawable/corner_rectangle"
+                android:background="@{isFav ? @drawable/corner_rectangle_fav : @drawable/corner_rectangle}"
+                android:onClick="@{(thisView) -> listener.onClick(position,thisView)}"
                 android:padding="@dimen/dimen8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

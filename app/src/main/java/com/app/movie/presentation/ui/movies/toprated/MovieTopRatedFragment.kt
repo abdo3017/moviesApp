@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.paging.PagingData
@@ -15,30 +16,36 @@ import com.app.movie.databinding.FragmentMovieTopRatedBinding
 import com.app.movie.databinding.ItemMovieTopRatedBinding
 import com.app.movie.datasource.network.models.movies.MovieTopRatedResult
 import com.app.movie.presentation.base.BaseFragment
+import com.app.movie.presentation.base.ItemClickListener
 import com.app.movie.presentation.base.LoadStateAdapter
+import com.app.movie.presentation.ui.movies.main.MoviesViewModel
 import com.app.movie.utils.BindingAdapters
 import com.app.movie.utils.CenterZoomLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class MovieTopRatedFragment(private val items: Flow<PagingData<MovieTopRatedResult>>) :
-    BaseFragment<FragmentMovieTopRatedBinding, Any>(), MovieTopRatedAdapter.MoviesInteraction {
+    BaseFragment<FragmentMovieTopRatedBinding, MoviesViewModel>() {
+    private val moviesViewModel: MoviesViewModel by viewModels()
+
     private var lastSelectedItemBinding: ItemMovieTopRatedBinding? = null
     private lateinit var layoutManager: CenterZoomLayoutManager
     private var lastVisibleItemWhiteBoarder: ConstraintLayout? = null
-    private var adapter: MovieTopRatedAdapter = MovieTopRatedAdapter(this)
+    private lateinit var adapter: MovieTopRatedAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         super.onCreateView(inflater, container, savedInstanceState)
-        getData()
         setUp()
+        getData()
+        observeData()
         return getMRootView()
     }
 
@@ -47,11 +54,23 @@ class MovieTopRatedFragment(private val items: Flow<PagingData<MovieTopRatedResu
             items.collectLatest {
                 adapter.submitData(it)
             }
+            val favMovie = async {
+                getViewModel().getFavMoviesTopRated()
+            }
+            favMovie.await()
         }
 
     }
 
+    private fun observeData() {
+        getViewModel().dataStateMovieTopRated.observe(viewLifecycleOwner, {
+            adapter.addFavItems(it)
+        })
+    }
+
     private fun setUp() {
+        adapter = MovieTopRatedAdapter(onMovieItemSelected())
+
         //Setup recyclerView
         layoutManager = CenterZoomLayoutManager(requireContext())
         getViewDataBinding().rvMoviesTopRated.layoutManager = layoutManager
@@ -90,18 +109,21 @@ class MovieTopRatedFragment(private val items: Flow<PagingData<MovieTopRatedResu
         }
     }
 
-    override fun onMovieItemSelected(
-        position: Int,
-        item: MovieTopRatedResult,
-        binding: ItemMovieTopRatedBinding
-    ) {
-
-        //Hide last selected item details
-        lastSelectedItemBinding?.let { displayMovieDetails(it, false) }
-
+    private fun onMovieItemSelected() = ItemClickListener { position: Int, view: View ->
         //Display selected item details
-        if (lastSelectedItemBinding != binding)
-            displayMovieDetails(binding, true)
+        if (lastSelectedItemBinding != adapter.listView[position])
+            displayMovieDetails(adapter.listView[position]!!, true)
+        else {
+            //Hide selected item details
+            if (lastSelectedItemBinding!!.isDetailsVisible == true)
+                lastSelectedItemBinding?.let {
+                    displayMovieDetails(it, false)
+                }
+            //Display selected item details
+            else lastSelectedItemBinding?.let {
+                displayMovieDetails(it, true)
+            }
+        }
     }
 
     private fun onFocusedItemChange(movie: MovieTopRatedResult, view: View) {
@@ -147,8 +169,7 @@ class MovieTopRatedFragment(private val items: Flow<PagingData<MovieTopRatedResu
     override val bindingVariableValue: Any
         get() = Any()
 
-    override fun getViewModel(): Any {
-        return Any()
-    }
+    override fun getViewModel() = moviesViewModel
+
 
 }

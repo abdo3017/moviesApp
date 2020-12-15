@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.paging.PagingData
@@ -15,23 +16,26 @@ import com.app.movie.databinding.FragmentMoviePopularBinding
 import com.app.movie.databinding.ItemMoviePopularBinding
 import com.app.movie.datasource.network.models.movies.MoviePopularResult
 import com.app.movie.presentation.base.BaseFragment
+import com.app.movie.presentation.base.ItemClickListener
 import com.app.movie.presentation.base.LoadStateAdapter
+import com.app.movie.presentation.ui.movies.main.MoviesViewModel
 import com.app.movie.utils.BindingAdapters
 import com.app.movie.utils.CenterZoomLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class MoviePopularFragment(private val items: Flow<PagingData<MoviePopularResult>>) :
-    BaseFragment<FragmentMoviePopularBinding, Any>(),
-    MoviePopularAdapter.MoviesInteraction {
+    BaseFragment<FragmentMoviePopularBinding, MoviesViewModel>() {
+    private val moviesViewModel: MoviesViewModel by viewModels()
 
     private var lastSelectedItemBinding: ItemMoviePopularBinding? = null
     private lateinit var layoutManager: CenterZoomLayoutManager
-    private var adapter: MoviePopularAdapter = MoviePopularAdapter(this)
+    private lateinit var adapter: MoviePopularAdapter
     private var lastVisibleItemWhiteBoarder: ConstraintLayout? = null
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,8 +43,9 @@ class MoviePopularFragment(private val items: Flow<PagingData<MoviePopularResult
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        getData()
         setUp()
+        getData()
+        observeData()
         return getMRootView()
     }
 
@@ -51,8 +56,12 @@ class MoviePopularFragment(private val items: Flow<PagingData<MoviePopularResult
     override val bindingVariableValue: Any
         get() = Any()
 
-    override fun getViewModel(): Any {
-        return Any()
+    override fun getViewModel() = moviesViewModel
+
+    private fun observeData() {
+        getViewModel().dataStateMoviePopular.observe(viewLifecycleOwner, {
+            adapter.addFavItems(it)
+        })
     }
 
     private fun getData() {
@@ -60,11 +69,16 @@ class MoviePopularFragment(private val items: Flow<PagingData<MoviePopularResult
             items.collectLatest {
                 adapter.submitData(it)
             }
+            val favMovie = async {
+                getViewModel().getFavMoviesPopular()
+            }
+            favMovie.await()
         }
 
     }
 
     private fun setUp() {
+        adapter = MoviePopularAdapter(onMovieItemSelected())
         //Setup recyclerView
         layoutManager = CenterZoomLayoutManager(requireContext())
         getViewDataBinding().rvMoviesPopular.layoutManager = layoutManager
@@ -140,17 +154,22 @@ class MoviePopularFragment(private val items: Flow<PagingData<MoviePopularResult
         BindingAdapters.loadImage(getViewDataBinding().backgroundImageView, movie.posterPath)
     }
 
-    override fun onMovieItemSelected(
-        position: Int,
-        item: MoviePopularResult,
-        binding: ItemMoviePopularBinding
-    ) {
-        //Hide last selected item details
-        lastSelectedItemBinding?.let { displayMovieDetails(it, false) }
-
+    private fun onMovieItemSelected() = ItemClickListener { position: Int, view: View ->
         //Display selected item details
-        if (lastSelectedItemBinding != binding)
-            displayMovieDetails(binding, true)
+        if (lastSelectedItemBinding != adapter.listView[position])
+            displayMovieDetails(adapter.listView[position]!!, true)
+        else {
+            //Hide selected item details
+            if (lastSelectedItemBinding!!.isDetailsVisible == true)
+                lastSelectedItemBinding?.let {
+                    displayMovieDetails(it, false)
+                }
+            //Display selected item details
+            else lastSelectedItemBinding?.let {
+                displayMovieDetails(it, true)
+            }
+        }
     }
+
 
 }

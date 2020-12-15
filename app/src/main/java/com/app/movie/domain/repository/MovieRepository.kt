@@ -1,15 +1,13 @@
-package com.app.movie.domain.repositoryimpl
+package com.app.movie.domain.repository
 
 import androidx.paging.PagingSource
 import com.app.movie.datasource.cache.database.dao.MovieDao
 import com.app.movie.datasource.cache.mappers.*
+import com.app.movie.datasource.cache.models.favouritemovies.asDomainModelList
 import com.app.movie.datasource.cache.models.movies.*
 import com.app.movie.datasource.network.api.movies.MovieServiceImpl
 import com.app.movie.datasource.network.mappers.*
-import com.app.movie.datasource.network.models.movies.MovieNowPlayingResultsItem
-import com.app.movie.datasource.network.models.movies.MoviePopularResult
-import com.app.movie.datasource.network.models.movies.MovieTopRatedResult
-import com.app.movie.datasource.network.models.movies.MovieUpComingResult
+import com.app.movie.datasource.network.models.movies.*
 import com.app.movie.domain.models.movies.MovieNowPlaying
 import com.app.movie.domain.models.movies.MoviePopular
 import com.app.movie.domain.models.movies.MovieTopRated
@@ -22,7 +20,7 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class MovieRepositoryImpl
+class MovieRepository
 @Inject
 constructor(
     private val movieDao: MovieDao,
@@ -88,10 +86,6 @@ constructor(
                 else -> LoadResult.Error((movieData as DataState.Error).exception)
             }
         }
-    }
-
-    suspend fun getMoviesNowPlaying(): Flow<DataState<Any>> {
-        TODO("Not yet implemented")
     }
 
     private suspend fun getMoviesTopRated(page: Int): DataState<MovieTopRated>? {
@@ -274,9 +268,98 @@ constructor(
                 emit(DataState.Error(e))
             }
         }
-        //delay(1000)
 
     }
 
+    suspend fun getFavMoviesNowPlaying(): List<MovieNowPlayingResultsItem> {
+        return try {
+            val favMovieNowPlayingResultsItemList = movieDao.getFavListMovieNowPlaying()
+            favMovieNowPlayingResultsItemList.asDomainModelList()
+        } catch (e: java.lang.Exception) {
+            emptyList()
+        }
+    }
 
+    suspend fun insertFavMoviesNowPlaying(movieNowPlayingResultsItem: MovieNowPlayingResultsItem) {
+        try {
+            movieDao.insertFavMovieNowPlaying(movieNowPlayingResultsItem.asDomainModel())
+        } catch (e: java.lang.Exception) {
+        }
+    }
+
+    suspend fun deleteFavMoviesNowPlaying(movieNowPlayingResultsItem: MovieNowPlayingResultsItem) {
+        try {
+            movieDao.deleteFavMovieNowPlaying(movieNowPlayingResultsItem.asDomainModel())
+        } catch (e: java.lang.Exception) {
+        }
+    }
+
+    suspend fun getFavMoviesTopRated(): List<MovieTopRatedResult> {
+        return try {
+            val favMovieTopRatedResultsItemList = movieDao.getFavListMovieTopRated()
+            favMovieTopRatedResultsItemList.asDomainModelList()
+        } catch (e: java.lang.Exception) {
+            emptyList()
+        }
+    }
+
+    suspend fun insertFavMoviesTopRated(movieTopRatedResult: MovieTopRatedResult) {
+        try {
+            movieDao.insertFavMovieTopRated(movieTopRatedResult.asDomainModel())
+        } catch (e: java.lang.Exception) {
+        }
+    }
+
+    suspend fun deleteFavMoviesTopRated(movieTopRatedResult: MovieTopRatedResult) {
+        try {
+            movieDao.deleteFavMovieTopRated(movieTopRatedResult.asDomainModel())
+        } catch (e: java.lang.Exception) {
+        }
+    }
+
+    suspend fun getFavMoviesUpComing(): List<MovieUpComingResult> {
+        return try {
+            val favMovieUpComingResultsItemList = movieDao.getFavListMovieUpComing()
+            favMovieUpComingResultsItemList.asDomainModelList()
+        } catch (e: java.lang.Exception) {
+            emptyList()
+        }
+    }
+
+    suspend fun insertFavMoviesUpComing(movieUpComingResult: MovieUpComingResult) {
+        try {
+            movieDao.insertFavMovieUpComing(movieUpComingResult.asDomainModel())
+        } catch (e: java.lang.Exception) {
+        }
+    }
+
+    suspend fun deleteFavMoviesUpComing(movieUpComingResult: MovieUpComingResult) {
+        try {
+            movieDao.deleteFavMovieUpComing(movieUpComingResult.asDomainModel())
+        } catch (e: java.lang.Exception) {
+        }
+    }
+
+    suspend fun getFavMoviesPopular(): List<MoviePopularResult> {
+        return try {
+            val favMoviePopularResultsItemList = movieDao.getFavListMoviePopular()
+            favMoviePopularResultsItemList.asDomainModelList()
+        } catch (e: java.lang.Exception) {
+            emptyList()
+        }
+    }
+
+    suspend fun insertFavMoviesPopular(moviePopularResultsItem: MoviePopularResult) {
+        try {
+            movieDao.insertFavMoviePopular(moviePopularResultsItem.asDomainModel())
+        } catch (e: java.lang.Exception) {
+        }
+    }
+
+    suspend fun deleteFavMoviesPopular(moviePopularResultsItem: MoviePopularResult) {
+        try {
+            movieDao.deleteFavMoviePopular(moviePopularResultsItem.asDomainModel())
+        } catch (e: java.lang.Exception) {
+        }
+    }
 }

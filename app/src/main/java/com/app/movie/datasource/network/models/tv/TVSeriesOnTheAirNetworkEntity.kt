@@ -1,6 +1,7 @@
 package com.app.movie.datasource.network.models.tv
 
 
+import com.app.movie.datasource.cache.models.favouritetv.FavTVSeriesOnTheAirResult
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -43,3 +44,5 @@ data class TVSeriesOnTheAirResult(
     @SerializedName("vote_count")
     val voteCount: Int = 0
 ) : Serializable
+
+fun TVSeriesOnTheAirResult.asDomainModel() = FavTVSeriesOnTheAirResult(id = id)
