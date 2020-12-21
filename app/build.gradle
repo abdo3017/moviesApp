@@ -143,6 +143,8 @@ dependencies {
     //paging 3
     implementation 'androidx.paging:paging-runtime-ktx:3.0.0-alpha09'
 
+    implementation 'com.kaopiz:kprogresshud:1.0.2'
+
 }
 
 kapt {

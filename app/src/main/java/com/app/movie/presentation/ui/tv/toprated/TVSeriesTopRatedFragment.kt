@@ -32,7 +32,7 @@ import kotlinx.coroutines.launch
 class TVSeriesTopRatedFragment(private val items: Flow<PagingData<TVSeriesTopRatedResult>>) :
     BaseFragment<FragmentTVTopRatedBinding, TVSeriesViewModel>() {
     private val tvSeriesViewModel: TVSeriesViewModel by viewModels()
-
+    private var visiblePosition: Int = 0
     private var lastSelectedItemBinding: ItemTVTopRatedBinding? = null
     private lateinit var layoutManager: CenterZoomLayoutManager
     private var lastVisibleItemWhiteBoarder: ConstraintLayout? = null
@@ -46,7 +46,30 @@ class TVSeriesTopRatedFragment(private val items: Flow<PagingData<TVSeriesTopRat
         setUp()
         getData()
         observeData()
+        onFavClick()
         return getMRootView()
+    }
+
+    private fun onFavClick() {
+        getViewDataBinding().btnFav.setOnClickListener {
+            if (adapter.listView[visiblePosition]!!.isFav == false) {
+                getViewModel().insertFavTVSeriesTopRated(
+                    adapter.getItems(
+                        visiblePosition
+                    )
+                )
+                getViewDataBinding().isLikedByMe = true
+                adapter.listView[visiblePosition]?.isFav = true
+            } else {
+                getViewModel().deleteFavTVSeriesTopRated(
+                    adapter.getItems(
+                        visiblePosition
+                    )
+                )
+                getViewDataBinding().isLikedByMe = false
+                adapter.listView[visiblePosition]?.isFav = false
+            }
+        }
     }
 
     private fun getData() {
@@ -84,11 +107,12 @@ class TVSeriesTopRatedFragment(private val items: Flow<PagingData<TVSeriesTopRat
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
-                val visiblePosition: Int = layoutManager.findFirstCompletelyVisibleItemPosition()
+                visiblePosition = layoutManager.findFirstCompletelyVisibleItemPosition()
                 if (visiblePosition > -1) {
                     val visibleView: View? = layoutManager.findViewByPosition(visiblePosition)
 
                     visibleView?.let {
+                        getViewDataBinding().isLikedByMe = adapter.listView[visiblePosition]!!.isFav
                         onFocusedItemChange(adapter.getItems(visiblePosition), it)
                     }
                 }

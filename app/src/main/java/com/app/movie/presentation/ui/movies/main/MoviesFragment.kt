@@ -44,7 +44,6 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() {
         setupMoviesViewPager()
         fetchData()
         onClick()
-        observeData()
         return getMRootView()
     }
 
@@ -81,77 +80,6 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding, MoviesViewModel>() {
             three.start()
             four.start()
         }
-    }
-
-    private fun observeData() {
-/*
-        getViewModel().dataStateMovieNowPlaying.observe(viewLifecycleOwner, {
-            when (it) {
-                is DataState.Success<MovieNowPlaying> -> {
-                    itemsNowPlaying = MutableLiveData(it.data.results.toMutableList())
-                    Log.d("trtrtr", itemsNowPlaying.value.toString())
-                    viewPageAdapter.addFragment(MoviePlayingNowFragment(itemsNowPlaying))
-                }
-                is DataState.Loading -> {
-                }
-                else -> {
-                    Log.d("moviee", (it as DataState.Error).exception.toString())
-
-                }
-            }
-        })
-*/
-/*
-        getViewModel().dataStateMovieTopRated.observe(viewLifecycleOwner, {
-            when (it) {
-                is DataState.Success<MovieTopRated> -> {
-                    itemsTopRated = MutableLiveData(it.data.results.toMutableList())
-                    viewPageAdapter.addFragment(MovieTopRatedFragment(itemsTopRated))
-
-                }
-                is DataState.Loading -> {
-                }
-                else -> {
-                    Log.d("moviee", (it as DataState.Error).exception.toString())
-
-                }
-            }
-        })
-*/
-/*
-        getViewModel().dataStateMovieUpComing.observe(viewLifecycleOwner, {
-            when (it) {
-                is DataState.Success<MovieUpComing> -> {
-                    itemsUpComing = MutableLiveData(it.data.results.toMutableList())
-                    viewPageAdapter.addFragment(MovieUpComingFragment(itemsUpComing))
-
-                }
-                is DataState.Loading -> {
-                }
-                else -> {
-                    Log.d("moviee", (it as DataState.Error).exception.toString())
-
-                }
-            }
-        })
-*/
-/*
-        getViewModel().dataStateMoviePopular.observe(viewLifecycleOwner, {
-            when (it) {
-                is DataState.Success<MoviePopular> -> {
-                    itemsPopular = MutableLiveData(it.data.results.toMutableList())
-                    viewPageAdapter.addFragment(MoviePopularFragment(itemsPopular))
-
-                }
-                is DataState.Loading -> {
-                }
-                else -> {
-                    Log.d("moviee", (it as DataState.Error).exception.toString())
-
-                }
-            }
-        })
-*/
     }
 
     private fun setupMoviesViewPager() {

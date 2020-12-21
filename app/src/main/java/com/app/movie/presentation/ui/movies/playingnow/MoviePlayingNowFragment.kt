@@ -1,6 +1,7 @@
 package com.app.movie.presentation.ui.movies.playingnow
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +24,6 @@ import com.app.movie.utils.BindingAdapters.loadImage
 import com.app.movie.utils.CenterZoomLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -35,6 +35,7 @@ class MoviePlayingNowFragment(private val items: Flow<PagingData<MovieNowPlaying
     private var lastSelectedItemBinding: ItemMoviePlayingNowBinding? = null
     private lateinit var layoutManager: CenterZoomLayoutManager
     private lateinit var adapter: MoviePlayingNowAdapter
+    private var visiblePosition: Int = 0
     private var lastVisibleItemWhiteBoarder: ConstraintLayout? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,7 +45,30 @@ class MoviePlayingNowFragment(private val items: Flow<PagingData<MovieNowPlaying
         setUp()
         getData()
         observeData()
+        onFavClick()
         return getMRootView()
+    }
+
+    private fun onFavClick() {
+        getViewDataBinding().btnFav.setOnClickListener {
+            if (adapter.listView[visiblePosition]!!.isFav == false) {
+                getViewModel().insertFavMoviesNowPlaying(
+                    adapter.getItems(
+                        visiblePosition
+                    )
+                )
+                getViewDataBinding().isLikedByMe = true
+                adapter.listView[visiblePosition]?.isFav = true
+            } else {
+                getViewModel().deleteFavMoviesNowPlaying(
+                    adapter.getItems(
+                        visiblePosition
+                    )
+                )
+                getViewDataBinding().isLikedByMe = false
+                adapter.listView[visiblePosition]?.isFav = false
+            }
+        }
     }
 
     override val layoutId: Int
@@ -57,14 +81,11 @@ class MoviePlayingNowFragment(private val items: Flow<PagingData<MovieNowPlaying
     override fun getViewModel() = moviesViewModel
 
     private fun getData() {
+        getViewModel().getFavMoviesNowPlaying()
         lifecycleScope.launch {
             items.collectLatest {
                 adapter.submitData(it)
             }
-            val favMovie = async {
-                getViewModel().getFavMoviesNowPlaying()
-            }
-            favMovie.await()
         }
     }
 
@@ -100,10 +121,12 @@ class MoviePlayingNowFragment(private val items: Flow<PagingData<MovieNowPlaying
             RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                val visiblePosition: Int = layoutManager.findFirstCompletelyVisibleItemPosition()
+                visiblePosition = layoutManager.findFirstCompletelyVisibleItemPosition()
                 if (visiblePosition > -1) {
                     val visibleView: View? = layoutManager.findViewByPosition(visiblePosition)
                     visibleView?.let {
+                        getViewDataBinding().isLikedByMe = adapter.listView[visiblePosition]!!.isFav
+                        Log.d("hereeeeeee", adapter.listView[visiblePosition]!!.isFav.toString())
                         onFocusedItemChange(adapter.getItems(visiblePosition), it)
                     }
                 }

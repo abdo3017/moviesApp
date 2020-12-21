@@ -2,6 +2,7 @@ package com.app.movie.datasource.network.models.movies
 
 
 import com.app.movie.datasource.cache.models.favouritemovies.FavMoviePopularResult
+import com.app.movie.domain.models.movies.FavouriteMovie
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -46,5 +47,19 @@ data class MoviePopularResult(
     @SerializedName("vote_count")
     val voteCount: Int = 0
 ) : Serializable
+
+fun List<MoviePopularResult>.asDomainModelList(): List<FavouriteMovie> {
+    return map {
+        FavouriteMovie(
+            id = it.id,
+            video = it.video,
+            title = it.title,
+            voteAverage = it.voteAverage,
+            voteCount = it.voteCount,
+            posterPath = it.posterPath,
+            backdropPath = it.backdropPath
+        )
+    }
+}
 
 fun MoviePopularResult.asDomainModel() = FavMoviePopularResult(id = id)

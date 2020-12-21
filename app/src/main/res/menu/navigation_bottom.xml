@@ -21,7 +21,7 @@
         app:showAsAction="always"
         android:title="@string/tv" />
     <item
-        android:id="@+id/favFragment"
+        android:id="@+id/favouriteFragment"
         android:icon="@drawable/nav_fav"
 
         android:orderInCategory="4"

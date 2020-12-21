@@ -2,6 +2,7 @@ package com.app.movie.datasource.network.models.movies
 
 
 import com.app.movie.datasource.cache.models.favouritemovies.FavMovieUpComingResult
+import com.app.movie.domain.models.movies.FavouriteMovie
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -55,5 +56,19 @@ data class MovieUpComingDates(
     @SerializedName("minimum")
     val minimum: String = ""
 ) : Serializable
+
+fun List<MovieUpComingResult>.asDomainModelList(): List<FavouriteMovie> {
+    return map {
+        FavouriteMovie(
+            id = it.id,
+            video = it.video,
+            title = it.title,
+            voteAverage = it.voteAverage,
+            voteCount = it.voteCount,
+            posterPath = it.posterPath,
+            backdropPath = it.backdropPath
+        )
+    }
+}
 
 fun MovieUpComingResult.asDomainModel() = FavMovieUpComingResult(id = id)

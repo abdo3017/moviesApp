@@ -31,7 +31,7 @@ import kotlinx.coroutines.launch
 class HomeFragment :
     BaseFragment<FragmentHomeBinding, HomeViewModel>() {
     private val homeViewModel: HomeViewModel by viewModels()
-    private lateinit var moviePlayingNowAdapter: HomeMoviePlayingNowAdapter
+    private lateinit var moviePlayingNowAdapter: MoviePlayingNowAdapter
     private lateinit var tvSeriesTopRatedAdapter: TVSeriesTopRatedAdapter
 
     override fun onCreateView(
@@ -76,7 +76,7 @@ class HomeFragment :
     }
 
     private fun setViews() {
-        moviePlayingNowAdapter = HomeMoviePlayingNowAdapter(onMovieClick())
+        moviePlayingNowAdapter = MoviePlayingNowAdapter(onMovieClick())
         tvSeriesTopRatedAdapter = TVSeriesTopRatedAdapter(onTVClick())
         getViewDataBinding().lifecycleOwner = this
         getViewDataBinding().rvMoviesPlayingNow.adapter =
@@ -84,6 +84,7 @@ class HomeFragment :
                 header = LoadStateAdapter { moviePlayingNowAdapter.retry() },
                 footer = LoadStateAdapter { moviePlayingNowAdapter.retry() }
             )
+
         lifecycleScope.launch {
             moviePlayingNowAdapter.loadStateFlow
                 // Only emit when REFRESH LoadState changes.
@@ -92,11 +93,13 @@ class HomeFragment :
                 .filter { it.refresh is LoadState.NotLoading }
                 .collect { getViewDataBinding().rvMoviesPlayingNow.scrollToPosition(0) }
         }
+
         getViewDataBinding().rvTVSeriesTopRated.adapter =
             tvSeriesTopRatedAdapter.withLoadStateHeaderAndFooter(
                 header = LoadStateAdapter { tvSeriesTopRatedAdapter.retry() },
                 footer = LoadStateAdapter { tvSeriesTopRatedAdapter.retry() }
             )
+
         lifecycleScope.launch {
             tvSeriesTopRatedAdapter.loadStateFlow
                 // Only emit when REFRESH LoadState changes.

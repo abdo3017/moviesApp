@@ -75,5 +75,4 @@ interface MovieDao {
 
     @Query("SELECT * FROM MovieVideosCacheEntity")
     suspend fun getMovieVideos(): MovieVideosCacheEntity
-
 }
